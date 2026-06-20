@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import AdminCalendar from "./AdminCalendar";
 
 type Reservation = {
   id: string;
@@ -21,6 +22,7 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
   const [reservations, setReservations] = useState<Reservation[]>(initialReservations);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [view, setView] = useState<"list" | "calendar">("list");
   const router = useRouter();
 
   const itemsPerPage = 10;
@@ -121,32 +123,74 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
           </div>
         </div>
 
-        {/* Toolbar: Search */}
-        <div style={{ marginBottom: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <input 
-            type="text" 
-            placeholder="Rechercher par nom, réf, tél, trajet..." 
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1); // Reset to page 1 on new search
-            }}
-            style={{
-              padding: "10px 16px",
-              borderRadius: "8px",
-              border: "1px solid #d1d5db",
-              width: "100%",
-              maxWidth: "400px",
-              fontSize: "14px",
-              outline: "none"
-            }}
-          />
-          <div style={{ color: "#6b7280", fontSize: "14px" }}>
-            {filteredReservations.length} résultat(s)
+        {/* View Toggle & Search Toolbar */}
+        <div style={{ marginBottom: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
+          
+          <div style={{ display: "flex", background: "#f3f4f6", padding: "4px", borderRadius: "8px" }}>
+            <button
+              onClick={() => setView("list")}
+              style={{
+                padding: "8px 16px",
+                borderRadius: "6px",
+                border: "none",
+                background: view === "list" ? "#fff" : "transparent",
+                color: view === "list" ? "#111827" : "#6b7280",
+                fontWeight: view === "list" ? 600 : 500,
+                boxShadow: view === "list" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }}
+            >
+              ☰ Vue Liste
+            </button>
+            <button
+              onClick={() => setView("calendar")}
+              style={{
+                padding: "8px 16px",
+                borderRadius: "6px",
+                border: "none",
+                background: view === "calendar" ? "#fff" : "transparent",
+                color: view === "calendar" ? "#111827" : "#6b7280",
+                fontWeight: view === "calendar" ? 600 : 500,
+                boxShadow: view === "calendar" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }}
+            >
+              📅 Calendrier
+            </button>
           </div>
+
+          {view === "list" && (
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", flex: 1, justifyContent: "flex-end" }}>
+              <input 
+                type="text" 
+                placeholder="Rechercher par nom, réf, tél, trajet..." 
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1); // Reset to page 1 on new search
+                }}
+                style={{
+                  padding: "10px 16px",
+                  borderRadius: "8px",
+                  border: "1px solid #d1d5db",
+                  width: "100%",
+                  maxWidth: "350px",
+                  fontSize: "14px",
+                  outline: "none"
+                }}
+              />
+              <div style={{ color: "#6b7280", fontSize: "14px" }}>
+                {filteredReservations.length} résultat(s)
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Table */}
+        {view === "calendar" ? (
+          <AdminCalendar reservations={reservations} />
+        ) : (
         <div style={{ background: "#fff", borderRadius: "12px", border: "1px solid #e5e7eb", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontSize: "14px" }}>
@@ -261,6 +305,7 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
             </div>
           )}
         </div>
+        )}
       </main>
     </div>
   );
