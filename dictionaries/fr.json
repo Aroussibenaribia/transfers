@@ -1,0 +1,109 @@
+{
+  "navbar": {
+    "available": "Service disponible"
+  },
+  "hero": {
+    "badge": "Service de transfert en Tunisie",
+    "title": "Votre transfert, partout en Tunisie",
+    "subtitle": "Réservez en quelques minutes votre transfert entre aéroports et villes. Chauffeurs professionnels, prix transparents, confirmation instantanée."
+  },
+  "features": {
+    "title": "Pourquoi choisir notre service ?",
+    "subtitle": "Un service de transfert fiable, transparent et adapté à tous vos besoins",
+    "f1_title": "Réservation instantanée",
+    "f1_desc": "Recevez votre confirmation et référence en quelques secondes par email",
+    "f2_title": "Toute la Tunisie",
+    "f2_desc": "Couvrons tous les aéroports et villes : Tunis, Sousse, Djerba, Sfax...",
+    "f3_title": "3 types de véhicules",
+    "f3_desc": "Éco, Confort ou Van selon la taille de votre groupe et vos préférences",
+    "f4_title": "Chauffeurs multilingues",
+    "f4_desc": "Arabe, Français, Anglais, Allemand ou Italien pour votre confort",
+    "f5_title": "Prix transparents",
+    "f5_desc": "Aucun frais caché. Prix fixe calculé avant la réservation",
+    "f6_title": "Suivi des vols",
+    "f6_desc": "Votre chauffeur suit votre vol et s'adapte en cas de retard"
+  },
+  "footer": {
+    "desc": "Service de transfert professionnel — Toute la Tunisie",
+    "rights": "Tous droits réservés."
+  },
+  "booking": {
+    "tabs": {
+      "route": "Trajet",
+      "vehicle": "Véhicule",
+      "options": "Options",
+      "flight": "Vol",
+      "contact": "Contact"
+    },
+    "buttons": {
+      "next": "Suivant",
+      "back": "Retour",
+      "confirm": "Confirmer la réservation",
+      "loading": "En cours..."
+    },
+    "step1": {
+      "departure": "Point de départ",
+      "departurePlaceholder": "Aéroport ou ville de départ",
+      "destination": "Destination",
+      "destinationPlaceholder": "Où allez-vous ?",
+      "date": "Date de départ",
+      "time": "Heure de départ",
+      "passengers": "Nombre de passagers",
+      "passengersPlaceholder": "Combien de personnes ?"
+    },
+    "step2": {
+      "eco": "Éco",
+      "confort": "Confort",
+      "van": "Van",
+      "maxPassengers": "max {count} passagers",
+      "select": "Sélectionner",
+      "selected": "Sélectionné"
+    },
+    "step3": {
+      "extraBaggage": "Bagages supplémentaires (+10€)",
+      "extraBaggageDesc": "Cochez si vous avez plus de bagages que la norme",
+      "driverLang": "Langue du chauffeur"
+    },
+    "step4": {
+      "flightNumber": "Numéro de vol (optionnel)",
+      "flightNumberPlaceholder": "Ex: TU 723",
+      "flightOrigin": "Aéroport d'origine (optionnel)",
+      "flightOriginPlaceholder": "Ex: Paris CDG",
+      "flightTime": "Heure d'arrivée (optionnel)",
+      "flightTimePlaceholder": "Ex: 14:30"
+    },
+    "step5": {
+      "name": "Nom complet",
+      "email": "Adresse email",
+      "phone": "Numéro de téléphone"
+    },
+    "summary": {
+      "title": "Résumé de votre trajet",
+      "route": "Trajet",
+      "passengers": "Passagers",
+      "vehicle": "Véhicule",
+      "basePrice": "Prix de base",
+      "total": "Total à payer",
+      "calculating": "Calcul...",
+      "notAvailable": "Trajet non disponible"
+    },
+    "confirmation": {
+      "title": "Réservation confirmée !",
+      "emailSent": "Un email de confirmation a été envoyé avec tous les détails de votre transfert.",
+      "reference": "Référence de réservation",
+      "keepReference": "Conservez cette référence — elle sera demandée pour toute modification",
+      "totalAmount": "Montant total",
+      "nextStepsTitle": "📋 Prochaines étapes",
+      "s1_title": "Email de confirmation",
+      "s1_desc": "Vérifiez votre boîte mail (et les spams) pour l'email de confirmation",
+      "s2_title": "Confirmation par notre équipe",
+      "s2_desc": "Notre équipe vous contactera pour valider les détails finaux",
+      "s3_title": "Votre chauffeur arrive",
+      "s3_desc": "Le chauffeur sera à votre point de prise en charge à l'heure prévue",
+      "s4_title": "Règlement à bord",
+      "s4_desc": "Le paiement s'effectue directement avec votre chauffeur",
+      "print": "🖨️ Imprimer / Sauvegarder",
+      "backHome": "← Faire une nouvelle réservation"
+    }
+  }
+}

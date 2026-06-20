@@ -1,0 +1,109 @@
+{
+  "navbar": {
+    "available": "Service available"
+  },
+  "hero": {
+    "badge": "Transfer service in Tunisia",
+    "title": "Your transfer, anywhere in Tunisia",
+    "subtitle": "Book your transfer between airports and cities in minutes. Professional drivers, transparent prices, instant confirmation."
+  },
+  "features": {
+    "title": "Why choose our service?",
+    "subtitle": "A reliable, transparent transfer service tailored to all your needs",
+    "f1_title": "Instant booking",
+    "f1_desc": "Receive your confirmation and reference in seconds by email",
+    "f2_title": "All of Tunisia",
+    "f2_desc": "We cover all airports and cities: Tunis, Sousse, Djerba, Sfax...",
+    "f3_title": "3 vehicle types",
+    "f3_desc": "Eco, Comfort, or Van depending on your group size and preferences",
+    "f4_title": "Multilingual drivers",
+    "f4_desc": "Arabic, French, English, German, or Italian for your comfort",
+    "f5_title": "Transparent pricing",
+    "f5_desc": "No hidden fees. Fixed price calculated before booking",
+    "f6_title": "Flight tracking",
+    "f6_desc": "Your driver tracks your flight and adjusts in case of delay"
+  },
+  "footer": {
+    "desc": "Professional transfer service — All of Tunisia",
+    "rights": "All rights reserved."
+  },
+  "booking": {
+    "tabs": {
+      "route": "Route",
+      "vehicle": "Vehicle",
+      "options": "Options",
+      "flight": "Flight",
+      "contact": "Contact"
+    },
+    "buttons": {
+      "next": "Next",
+      "back": "Back",
+      "confirm": "Confirm booking",
+      "loading": "Processing..."
+    },
+    "step1": {
+      "departure": "Departure Point",
+      "departurePlaceholder": "Airport or city of departure",
+      "destination": "Destination",
+      "destinationPlaceholder": "Where are you going?",
+      "date": "Departure Date",
+      "time": "Departure Time",
+      "passengers": "Number of passengers",
+      "passengersPlaceholder": "How many people?"
+    },
+    "step2": {
+      "eco": "Eco",
+      "confort": "Comfort",
+      "van": "Van",
+      "maxPassengers": "max {count} passengers",
+      "select": "Select",
+      "selected": "Selected"
+    },
+    "step3": {
+      "extraBaggage": "Extra luggage (+10€)",
+      "extraBaggageDesc": "Check this if you have more luggage than usual",
+      "driverLang": "Driver Language"
+    },
+    "step4": {
+      "flightNumber": "Flight Number (optional)",
+      "flightNumberPlaceholder": "Ex: TU 723",
+      "flightOrigin": "Origin Airport (optional)",
+      "flightOriginPlaceholder": "Ex: Paris CDG",
+      "flightTime": "Arrival Time (optional)",
+      "flightTimePlaceholder": "Ex: 14:30"
+    },
+    "step5": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number"
+    },
+    "summary": {
+      "title": "Trip Summary",
+      "route": "Route:",
+      "passengers": "Passengers:",
+      "vehicle": "Vehicle:",
+      "basePrice": "Base Price",
+      "total": "Total to pay",
+      "calculating": "Calculating...",
+      "notAvailable": "Route not available"
+    },
+    "confirmation": {
+      "title": "Booking Confirmed!",
+      "emailSent": "A confirmation email has been sent with all the details of your transfer.",
+      "reference": "Booking Reference",
+      "keepReference": "Keep this reference — it will be required for any modifications",
+      "totalAmount": "Total amount",
+      "nextStepsTitle": "📋 Next steps",
+      "s1_title": "Confirmation Email",
+      "s1_desc": "Check your inbox (and spam folder) for the confirmation email",
+      "s2_title": "Confirmation by our team",
+      "s2_desc": "Our team will contact you to validate the final details",
+      "s3_title": "Your driver arrives",
+      "s3_desc": "The driver will be at your pickup point at the scheduled time",
+      "s4_title": "Payment on board",
+      "s4_desc": "Payment is made directly with your driver",
+      "print": "🖨️ Print / Save",
+      "backHome": "← Make a new booking"
+    }
+  }
+}

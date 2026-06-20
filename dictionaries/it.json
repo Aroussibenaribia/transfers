@@ -1,0 +1,109 @@
+{
+  "navbar": {
+    "available": "Servizio disponibile"
+  },
+  "hero": {
+    "badge": "Servizio di trasferimento in Tunisia",
+    "title": "Il tuo trasferimento, ovunque in Tunisia",
+    "subtitle": "Prenota il tuo trasferimento tra aeroporti e città in pochi minuti. Autisti professionali, prezzi trasparenti, conferma immediata."
+  },
+  "features": {
+    "title": "Perché scegliere il nostro servizio?",
+    "subtitle": "Un servizio di trasferimento affidabile, trasparente e su misura per le tue esigenze",
+    "f1_title": "Prenotazione immediata",
+    "f1_desc": "Ricevi la conferma e il riferimento in pochi secondi via email",
+    "f2_title": "Tutta la Tunisia",
+    "f2_desc": "Copriamo tutti gli aeroporti e le città: Tunisi, Sousse, Djerba, Sfax...",
+    "f3_title": "3 tipi di veicoli",
+    "f3_desc": "Eco, Comfort o Van a seconda della dimensione del tuo gruppo",
+    "f4_title": "Autisti multilingue",
+    "f4_desc": "Arabo, Francese, Inglese, Tedesco o Italiano per il tuo comfort",
+    "f5_title": "Prezzi trasparenti",
+    "f5_desc": "Nessun costo nascosto. Prezzo fisso calcolato prima della prenotazione",
+    "f6_title": "Monitoraggio dei voli",
+    "f6_desc": "Il tuo autista segue il tuo volo e si adatta in caso di ritardo"
+  },
+  "footer": {
+    "desc": "Servizio di trasferimento professionale — Tutta la Tunisia",
+    "rights": "Tutti i diritti riservati."
+  },
+  "booking": {
+    "tabs": {
+      "route": "Percorso",
+      "vehicle": "Veicolo",
+      "options": "Opzioni",
+      "flight": "Volo",
+      "contact": "Contatto"
+    },
+    "buttons": {
+      "next": "Avanti",
+      "back": "Indietro",
+      "confirm": "Conferma la prenotazione",
+      "loading": "Elaborazione in corso..."
+    },
+    "step1": {
+      "departure": "Punto di partenza",
+      "departurePlaceholder": "Aeroporto o città di partenza",
+      "destination": "Destinazione",
+      "destinationPlaceholder": "Dove stai andando?",
+      "date": "Data di partenza",
+      "time": "Orario di partenza",
+      "passengers": "Numero di passeggeri",
+      "passengersPlaceholder": "Quante persone?"
+    },
+    "step2": {
+      "eco": "Eco",
+      "confort": "Comfort",
+      "van": "Van",
+      "maxPassengers": "max {count} passeggeri",
+      "select": "Seleziona",
+      "selected": "Selezionato"
+    },
+    "step3": {
+      "extraBaggage": "Bagagli extra (+10€)",
+      "extraBaggageDesc": "Spunta se hai più bagagli del normale",
+      "driverLang": "Lingua dell'autista"
+    },
+    "step4": {
+      "flightNumber": "Numero del volo (opzionale)",
+      "flightNumberPlaceholder": "Es: TU 723",
+      "flightOrigin": "Aeroporto di origine (opzionale)",
+      "flightOriginPlaceholder": "Es: Paris CDG",
+      "flightTime": "Orario di arrivo (opzionale)",
+      "flightTimePlaceholder": "Es: 14:30"
+    },
+    "step5": {
+      "name": "Nome e cognome",
+      "email": "Indirizzo email",
+      "phone": "Numero di telefono"
+    },
+    "summary": {
+      "title": "Riepilogo del viaggio",
+      "route": "Percorso:",
+      "passengers": "Passeggeri:",
+      "vehicle": "Veicolo:",
+      "basePrice": "Prezzo base",
+      "total": "Totale da pagare",
+      "calculating": "Calcolo...",
+      "notAvailable": "Percorso non disponibile"
+    },
+    "confirmation": {
+      "title": "Prenotazione Confermata!",
+      "emailSent": "Un'email di conferma con tutti i dettagli del tuo trasferimento è stata inviata.",
+      "reference": "Riferimento di prenotazione",
+      "keepReference": "Conserva questo riferimento — sarà richiesto per eventuali modifiche",
+      "totalAmount": "Importo totale",
+      "nextStepsTitle": "📋 Prossimi passi",
+      "s1_title": "Email di conferma",
+      "s1_desc": "Controlla la tua casella di posta (e lo spam) per l'email di conferma",
+      "s2_title": "Conferma dal nostro team",
+      "s2_desc": "Il nostro team ti contatterà per convalidare i dettagli finali",
+      "s3_title": "Il tuo autista arriva",
+      "s3_desc": "L'autista sarà al tuo punto di prelievo all'orario stabilito",
+      "s4_title": "Pagamento a bordo",
+      "s4_desc": "Il pagamento si effettua direttamente con l'autista",
+      "print": "🖨️ Stampa / Salva",
+      "backHome": "← Effettua una nuova prenotazione"
+    }
+  }
+}

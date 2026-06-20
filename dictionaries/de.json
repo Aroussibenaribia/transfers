@@ -1,0 +1,109 @@
+{
+  "navbar": {
+    "available": "Dienst verfügbar"
+  },
+  "hero": {
+    "badge": "Transferservice in Tunesien",
+    "title": "Ihr Transfer, überall in Tunesien",
+    "subtitle": "Buchen Sie Ihren Transfer zwischen Flughäfen und Städten in Minuten. Professionelle Fahrer, transparente Preise, sofortige Bestätigung."
+  },
+  "features": {
+    "title": "Warum unseren Service wählen?",
+    "subtitle": "Ein zuverlässiger, transparenter Transferservice, der auf all Ihre Bedürfnisse zugeschnitten ist",
+    "f1_title": "Sofortige Buchung",
+    "f1_desc": "Erhalten Sie Ihre Bestätigung und Referenz in Sekunden per E-Mail",
+    "f2_title": "Ganz Tunesien",
+    "f2_desc": "Wir decken alle Flughäfen und Städte ab: Tunis, Sousse, Djerba, Sfax...",
+    "f3_title": "3 Fahrzeugtypen",
+    "f3_desc": "Eco, Comfort oder Van je nach Gruppengröße und Vorlieben",
+    "f4_title": "Mehrsprachige Fahrer",
+    "f4_desc": "Arabisch, Französisch, Englisch, Deutsch oder Italienisch",
+    "f5_title": "Transparente Preise",
+    "f5_desc": "Keine versteckten Gebühren. Festpreis vor der Buchung berechnet",
+    "f6_title": "Flugverfolgung",
+    "f6_desc": "Ihr Fahrer verfolgt Ihren Flug und passt sich bei Verspätungen an"
+  },
+  "footer": {
+    "desc": "Professioneller Transferservice — Ganz Tunesien",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "booking": {
+    "tabs": {
+      "route": "Route",
+      "vehicle": "Fahrzeug",
+      "options": "Optionen",
+      "flight": "Flug",
+      "contact": "Kontakt"
+    },
+    "buttons": {
+      "next": "Weiter",
+      "back": "Zurück",
+      "confirm": "Buchung bestätigen",
+      "loading": "Wird bearbeitet..."
+    },
+    "step1": {
+      "departure": "Abfahrtsort",
+      "departurePlaceholder": "Flughafen oder Stadt der Abfahrt",
+      "destination": "Ziel",
+      "destinationPlaceholder": "Wohin reisen Sie?",
+      "date": "Abfahrtsdatum",
+      "time": "Abfahrtszeit",
+      "passengers": "Anzahl der Passagiere",
+      "passengersPlaceholder": "Wie viele Personen?"
+    },
+    "step2": {
+      "eco": "Eco",
+      "confort": "Comfort",
+      "van": "Van",
+      "maxPassengers": "max {count} Passagiere",
+      "select": "Auswählen",
+      "selected": "Ausgewählt"
+    },
+    "step3": {
+      "extraBaggage": "Zusätzliches Gepäck (+10€)",
+      "extraBaggageDesc": "Aktivieren Sie dies, wenn Sie mehr Gepäck als üblich haben",
+      "driverLang": "Sprache des Fahrers"
+    },
+    "step4": {
+      "flightNumber": "Flugnummer (optional)",
+      "flightNumberPlaceholder": "Bsp: TU 723",
+      "flightOrigin": "Startflughafen (optional)",
+      "flightOriginPlaceholder": "Bsp: Paris CDG",
+      "flightTime": "Ankunftszeit (optional)",
+      "flightTimePlaceholder": "Bsp: 14:30"
+    },
+    "step5": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail-Adresse",
+      "phone": "Telefonnummer"
+    },
+    "summary": {
+      "title": "Reisezusammenfassung",
+      "route": "Route:",
+      "passengers": "Passagiere:",
+      "vehicle": "Fahrzeug:",
+      "basePrice": "Grundpreis",
+      "total": "Gesamtbetrag",
+      "calculating": "Berechnen...",
+      "notAvailable": "Route nicht verfügbar"
+    },
+    "confirmation": {
+      "title": "Buchung Bestätigt!",
+      "emailSent": "Eine Bestätigungs-E-Mail mit allen Details Ihres Transfers wurde gesendet.",
+      "reference": "Buchungsreferenz",
+      "keepReference": "Bewahren Sie diese Referenz auf — sie wird für Änderungen benötigt",
+      "totalAmount": "Gesamtbetrag",
+      "nextStepsTitle": "📋 Nächste Schritte",
+      "s1_title": "Bestätigungs-E-Mail",
+      "s1_desc": "Überprüfen Sie Ihren Posteingang (und Spam) auf die Bestätigungs-E-Mail",
+      "s2_title": "Bestätigung durch unser Team",
+      "s2_desc": "Unser Team wird Sie kontaktieren, um die finalen Details zu bestätigen",
+      "s3_title": "Ihr Fahrer kommt",
+      "s3_desc": "Der Fahrer wird zur geplanten Zeit an Ihrem Abholort sein",
+      "s4_title": "Zahlung an Bord",
+      "s4_desc": "Die Zahlung erfolgt direkt bei Ihrem Fahrer",
+      "print": "🖨️ Drucken / Speichern",
+      "backHome": "← Neue Buchung vornehmen"
+    }
+  }
+}
