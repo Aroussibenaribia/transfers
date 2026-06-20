@@ -87,6 +87,12 @@ h1, h2, h3, h4, h5 {
   position: relative;
 }
 
+@media (max-width: 600px) {
+  .page-hero {
+    padding: 48px 16px 180px;
+  }
+}
+
 .page-hero::before {
   content: '';
   position: absolute;
@@ -147,6 +153,12 @@ h1, h2, h3, h4, h5 {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   padding: 32px;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 20px;
+  }
 }
 
 .card-sm {
@@ -212,6 +224,15 @@ h1, h2, h3, h4, h5 {
 .progress-step.active .progress-step-label {
   color: var(--primary);
   font-weight: 600;
+}
+
+@media (max-width: 500px) {
+  .progress-step-label {
+    display: none;
+  }
+  .progress-line {
+    min-width: 16px;
+  }
 }
 
 .progress-step.done .progress-step-label {
@@ -809,6 +830,18 @@ h1, h2, h3, h4, h5 {
   top: 0;
   z-index: 100;
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 16px;
+  }
+  .navbar .badge-green {
+    display: none; /* Hide 'Service disponible' on small phones */
+  }
+  .sm-block {
+    display: none !important;
+  }
 }
 
 .navbar-logo {
