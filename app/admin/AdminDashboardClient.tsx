@@ -18,8 +18,32 @@ type Reservation = {
   createdAt: Date;
 };
 
-export default function AdminDashboardClient({ initialReservations }: { initialReservations: Reservation[] }) {
+type ExcursionReservation = {
+  id: string;
+  reference: string;
+  excursionName: string;
+  clientName: string;
+  clientPhone: string;
+  clientEmail: string;
+  participants: number;
+  date: Date;
+  notes: string | null;
+  totalPrice: number;
+  status: string;
+  createdAt: Date;
+};
+
+export default function AdminDashboardClient({
+  initialReservations,
+  initialExcursionReservations,
+}: {
+  initialReservations: Reservation[];
+  initialExcursionReservations: ExcursionReservation[];
+}) {
   const [reservations, setReservations] = useState<Reservation[]>(initialReservations);
+  const [excursionReservations, setExcursionReservations] = useState<ExcursionReservation[]>(initialExcursionReservations);
+  
+  const [mainTab, setMainTab] = useState<"transfers" | "excursions">("transfers");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [view, setView] = useState<"list" | "calendar">("list");
@@ -53,7 +77,31 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
     }
   };
 
-  const totalRevenue = reservations
+  const updateExcursionStatus = async (id: string, newStatus: string) => {
+    try {
+      const res = await fetch(`/api/admin/excursion-reservations/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (res.ok) {
+        setExcursionReservations(prev =>
+          prev.map(r => (r.id === id ? { ...r, status: newStatus } : r))
+        );
+      } else {
+        alert("Erreur lors de la mise à jour");
+      }
+    } catch (err) {
+      alert("Erreur réseau");
+    }
+  };
+
+  const totalTransferRevenue = reservations
+    .filter(r => r.status !== "cancelled")
+    .reduce((sum, r) => sum + r.totalPrice, 0);
+
+  const totalExcursionRevenue = excursionReservations
     .filter(r => r.status !== "cancelled")
     .reduce((sum, r) => sum + r.totalPrice, 0);
 
@@ -82,17 +130,28 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
     );
   }, [reservations, searchQuery]);
 
-  const totalPages = Math.ceil(filteredReservations.length / itemsPerPage);
+  const filteredExcursions = useMemo(() => {
+    if (!searchQuery.trim()) return excursionReservations;
+    const lowerQuery = searchQuery.toLowerCase();
+    return excursionReservations.filter(r => 
+      r.reference.toLowerCase().includes(lowerQuery) ||
+      r.clientName.toLowerCase().includes(lowerQuery) ||
+      r.clientPhone.toLowerCase().includes(lowerQuery) ||
+      r.excursionName.toLowerCase().includes(lowerQuery)
+    );
+  }, [excursionReservations, searchQuery]);
+
+  const currentList = mainTab === "transfers" ? filteredReservations : filteredExcursions;
+  const totalPages = Math.ceil(currentList.length / itemsPerPage);
   
-  // Ensure we don't stay on an empty page after filtering
   if (currentPage > totalPages && totalPages > 0) {
     setCurrentPage(totalPages);
   }
 
-  const paginatedReservations = useMemo(() => {
+  const paginatedList = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredReservations.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredReservations, currentPage]);
+    return currentList.slice(startIndex, startIndex + itemsPerPage);
+  }, [currentList, currentPage]);
 
   return (
     <div style={{ minHeight: "100vh", background: "#f9fafb" }}>
@@ -111,15 +170,59 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
       </header>
 
       <main style={{ padding: "32px 24px", maxWidth: "1200px", margin: "0 auto" }}>
+        {/* Main Tabs */}
+        <div style={{ display: "flex", gap: "16px", marginBottom: "32px", borderBottom: "1px solid #e5e7eb", paddingBottom: "16px" }}>
+          <button
+            onClick={() => { setMainTab("transfers"); setCurrentPage(1); }}
+            style={{
+              background: mainTab === "transfers" ? "#7c3aed" : "transparent",
+              color: mainTab === "transfers" ? "#fff" : "#4b5563",
+              border: "1px solid",
+              borderColor: mainTab === "transfers" ? "#7c3aed" : "#d1d5db",
+              padding: "10px 24px",
+              borderRadius: "100px",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "all 0.2s"
+            }}
+          >
+            🚗 Transferts
+          </button>
+          <button
+            onClick={() => { setMainTab("excursions"); setCurrentPage(1); }}
+            style={{
+              background: mainTab === "excursions" ? "#7c3aed" : "transparent",
+              color: mainTab === "excursions" ? "#fff" : "#4b5563",
+              border: "1px solid",
+              borderColor: mainTab === "excursions" ? "#7c3aed" : "#d1d5db",
+              padding: "10px 24px",
+              borderRadius: "100px",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "all 0.2s"
+            }}
+          >
+            🗺️ Excursions
+          </button>
+        </div>
+
         {/* Metrics */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px", marginBottom: "32px" }}>
           <div style={{ background: "#fff", padding: "24px", borderRadius: "12px", border: "1px solid #e5e7eb", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-            <h3 style={{ color: "#6b7280", fontSize: "14px", margin: "0 0 8px 0" }}>Total Réservations</h3>
-            <p style={{ color: "#111827", fontSize: "32px", fontWeight: 700, margin: 0 }}>{reservations.length}</p>
+            <h3 style={{ color: "#6b7280", fontSize: "14px", margin: "0 0 8px 0" }}>
+              Total Réservations ({mainTab === "transfers" ? "Transferts" : "Excursions"})
+            </h3>
+            <p style={{ color: "#111827", fontSize: "32px", fontWeight: 700, margin: 0 }}>
+              {mainTab === "transfers" ? reservations.length : excursionReservations.length}
+            </p>
           </div>
           <div style={{ background: "#fff", padding: "24px", borderRadius: "12px", border: "1px solid #e5e7eb", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-            <h3 style={{ color: "#6b7280", fontSize: "14px", margin: "0 0 8px 0" }}>Revenus Estimés</h3>
-            <p style={{ color: "#7c3aed", fontSize: "32px", fontWeight: 700, margin: 0 }}>{totalRevenue}€</p>
+            <h3 style={{ color: "#6b7280", fontSize: "14px", margin: "0 0 8px 0" }}>
+              Revenus Estimés ({mainTab === "transfers" ? "Transferts" : "Excursions"})
+            </h3>
+            <p style={{ color: "#7c3aed", fontSize: "32px", fontWeight: 700, margin: 0 }}>
+              {mainTab === "transfers" ? totalTransferRevenue : totalExcursionRevenue}€
+            </p>
           </div>
         </div>
 
@@ -143,33 +246,35 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
             >
               ☰ Vue Liste
             </button>
-            <button
-              onClick={() => setView("calendar")}
-              style={{
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "none",
-                background: view === "calendar" ? "#fff" : "transparent",
-                color: view === "calendar" ? "#111827" : "#6b7280",
-                fontWeight: view === "calendar" ? 600 : 500,
-                boxShadow: view === "calendar" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
-                cursor: "pointer",
-                transition: "all 0.2s"
-              }}
-            >
-              📅 Calendrier
-            </button>
+            {mainTab === "transfers" && (
+              <button
+                onClick={() => setView("calendar")}
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  border: "none",
+                  background: view === "calendar" ? "#fff" : "transparent",
+                  color: view === "calendar" ? "#111827" : "#6b7280",
+                  fontWeight: view === "calendar" ? 600 : 500,
+                  boxShadow: view === "calendar" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                  cursor: "pointer",
+                  transition: "all 0.2s"
+                }}
+              >
+                📅 Calendrier
+              </button>
+            )}
           </div>
 
           {view === "list" && (
             <div style={{ display: "flex", alignItems: "center", gap: "16px", flex: 1, justifyContent: "flex-end" }}>
               <input 
                 type="text" 
-                placeholder="Rechercher par nom, réf, tél, trajet..." 
+                placeholder="Rechercher par nom, réf, tél..." 
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
-                  setCurrentPage(1); // Reset to page 1 on new search
+                  setCurrentPage(1);
                 }}
                 style={{
                   padding: "10px 16px",
@@ -182,129 +287,151 @@ export default function AdminDashboardClient({ initialReservations }: { initialR
                 }}
               />
               <div style={{ color: "#6b7280", fontSize: "14px" }}>
-                {filteredReservations.length} résultat(s)
+                {currentList.length} résultat(s)
               </div>
             </div>
           )}
         </div>
 
-        {view === "calendar" ? (
+        {view === "calendar" && mainTab === "transfers" ? (
           <AdminCalendar reservations={reservations} />
         ) : (
-        <div style={{ background: "#fff", borderRadius: "12px", border: "1px solid #e5e7eb", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontSize: "14px" }}>
-              <thead style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
-                <tr>
-                  <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Réf. & Date</th>
-                  <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Client</th>
-                  <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Trajet</th>
-                  <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Prix</th>
-                  <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Statut</th>
-                  <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedReservations.length === 0 ? (
+          <div style={{ background: "#fff", borderRadius: "12px", border: "1px solid #e5e7eb", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontSize: "14px" }}>
+                <thead style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
                   <tr>
-                    <td colSpan={6} style={{ padding: "32px", textAlign: "center", color: "#6b7280" }}>
-                      Aucune réservation trouvée
-                    </td>
+                    <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Réf. & Date</th>
+                    <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Client</th>
+                    <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>{mainTab === "transfers" ? "Trajet" : "Excursion"}</th>
+                    <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Prix</th>
+                    <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Statut</th>
+                    <th style={{ padding: "16px", color: "#4b5563", fontWeight: 600 }}>Actions</th>
                   </tr>
-                ) : (
-                  paginatedReservations.map(r => (
-                    <tr key={r.id} style={{ borderBottom: "1px solid #e5e7eb" }}>
-                      <td style={{ padding: "16px" }}>
-                        <div style={{ fontWeight: 600, color: "#111827", marginBottom: "4px" }}>{r.reference}</div>
-                        <div style={{ color: "#6b7280", fontSize: "12px" }}>
-                          {new Date(r.createdAt).toLocaleDateString("fr-FR")}
-                        </div>
-                      </td>
-                      <td style={{ padding: "16px" }}>
-                        <div style={{ fontWeight: 500, color: "#111827" }}>{r.clientName}</div>
-                        <div style={{ color: "#6b7280", fontSize: "13px" }}>{r.clientPhone}</div>
-                      </td>
-                      <td style={{ padding: "16px" }}>
-                        <div style={{ color: "#111827", marginBottom: "4px" }}>
-                          <strong>De:</strong> {r.departure}
-                        </div>
-                        <div style={{ color: "#111827", marginBottom: "4px" }}>
-                          <strong>À:</strong> {r.destination}
-                        </div>
-                        <div style={{ color: "#6b7280", fontSize: "12px" }}>
-                          Le {new Date(r.departureDate).toLocaleDateString("fr-FR")} à {r.departureTime}
-                        </div>
-                      </td>
-                      <td style={{ padding: "16px", fontWeight: 600, color: "#7c3aed" }}>
-                        {r.totalPrice}€
-                      </td>
-                      <td style={{ padding: "16px" }}>
-                        {getStatusBadge(r.status)}
-                      </td>
-                      <td style={{ padding: "16px" }}>
-                        <select
-                          value={r.status}
-                          onChange={(e) => updateStatus(r.id, e.target.value)}
-                          style={{
-                            padding: "6px 12px",
-                            borderRadius: "6px",
-                            border: "1px solid #d1d5db",
-                            background: "#fff",
-                            fontSize: "13px",
-                            cursor: "pointer"
-                          }}
-                        >
-                          <option value="confirmed">Confirmé</option>
-                          <option value="completed">Terminé</option>
-                          <option value="cancelled">Annulé</option>
-                        </select>
+                </thead>
+                <tbody>
+                  {paginatedList.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} style={{ padding: "32px", textAlign: "center", color: "#6b7280" }}>
+                        Aucune réservation trouvée
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-          
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div style={{ padding: "16px", background: "#f9fafb", display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid #e5e7eb" }}>
-              <button 
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                style={{
-                  padding: "6px 12px",
-                  borderRadius: "6px",
-                  border: "1px solid #d1d5db",
-                  background: currentPage === 1 ? "#f3f4f6" : "#fff",
-                  color: currentPage === 1 ? "#9ca3af" : "#374151",
-                  cursor: currentPage === 1 ? "not-allowed" : "pointer",
-                  fontSize: "14px"
-                }}
-              >
-                Précédent
-              </button>
-              <div style={{ fontSize: "14px", color: "#4b5563" }}>
-                Page {currentPage} sur {totalPages}
-              </div>
-              <button 
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                style={{
-                  padding: "6px 12px",
-                  borderRadius: "6px",
-                  border: "1px solid #d1d5db",
-                  background: currentPage === totalPages ? "#f3f4f6" : "#fff",
-                  color: currentPage === totalPages ? "#9ca3af" : "#374151",
-                  cursor: currentPage === totalPages ? "not-allowed" : "pointer",
-                  fontSize: "14px"
-                }}
-              >
-                Suivant
-              </button>
+                  ) : (
+                    paginatedList.map((r: any) => (
+                      <tr key={r.id} style={{ borderBottom: "1px solid #e5e7eb" }}>
+                        <td style={{ padding: "16px" }}>
+                          <div style={{ fontWeight: 600, color: "#111827", marginBottom: "4px" }}>{r.reference}</div>
+                          <div style={{ color: "#6b7280", fontSize: "12px" }}>
+                            Créé le {new Date(r.createdAt).toLocaleDateString("fr-FR")}
+                          </div>
+                        </td>
+                        <td style={{ padding: "16px" }}>
+                          <div style={{ fontWeight: 500, color: "#111827" }}>{r.clientName}</div>
+                          <div style={{ color: "#6b7280", fontSize: "13px" }}>{r.clientPhone}</div>
+                        </td>
+                        <td style={{ padding: "16px" }}>
+                          {mainTab === "transfers" ? (
+                            <>
+                              <div style={{ color: "#111827", marginBottom: "4px" }}>
+                                <strong>De:</strong> {r.departure}
+                              </div>
+                              <div style={{ color: "#111827", marginBottom: "4px" }}>
+                                <strong>À:</strong> {r.destination}
+                              </div>
+                              <div style={{ color: "#6b7280", fontSize: "12px" }}>
+                                Le {new Date(r.departureDate).toLocaleDateString("fr-FR")} à {r.departureTime}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div style={{ color: "#111827", marginBottom: "4px", fontWeight: 600 }}>
+                                {r.excursionName}
+                              </div>
+                              <div style={{ color: "#6b7280", fontSize: "13px", marginBottom: "4px" }}>
+                                {r.participants} Participant(s)
+                              </div>
+                              <div style={{ color: "#6b7280", fontSize: "12px" }}>
+                                Prévu le {new Date(r.date).toLocaleDateString("fr-FR")}
+                              </div>
+                            </>
+                          )}
+                        </td>
+                        <td style={{ padding: "16px", fontWeight: 600, color: "#7c3aed" }}>
+                          {r.totalPrice}€
+                        </td>
+                        <td style={{ padding: "16px" }}>
+                          {getStatusBadge(r.status)}
+                        </td>
+                        <td style={{ padding: "16px" }}>
+                          <select
+                            value={r.status}
+                            onChange={(e) => {
+                              if (mainTab === "transfers") {
+                                updateStatus(r.id, e.target.value);
+                              } else {
+                                updateExcursionStatus(r.id, e.target.value);
+                              }
+                            }}
+                            style={{
+                              padding: "6px 12px",
+                              borderRadius: "6px",
+                              border: "1px solid #d1d5db",
+                              background: "#fff",
+                              fontSize: "13px",
+                              cursor: "pointer"
+                            }}
+                          >
+                            <option value="confirmed">Confirmé</option>
+                            <option value="completed">Terminé</option>
+                            <option value="cancelled">Annulé</option>
+                          </select>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
             </div>
-          )}
-        </div>
+            
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div style={{ padding: "16px", background: "#f9fafb", display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid #e5e7eb" }}>
+                <button 
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: "6px",
+                    border: "1px solid #d1d5db",
+                    background: currentPage === 1 ? "#f3f4f6" : "#fff",
+                    color: currentPage === 1 ? "#9ca3af" : "#374151",
+                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                    fontSize: "14px"
+                  }}
+                >
+                  Précédent
+                </button>
+                <div style={{ fontSize: "14px", color: "#4b5563" }}>
+                  Page {currentPage} sur {totalPages}
+                </div>
+                <button 
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: "6px",
+                    border: "1px solid #d1d5db",
+                    background: currentPage === totalPages ? "#f3f4f6" : "#fff",
+                    color: currentPage === totalPages ? "#9ca3af" : "#374151",
+                    cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                    fontSize: "14px"
+                  }}
+                >
+                  Suivant
+                </button>
+              </div>
+            )}
+          </div>
         )}
       </main>
     </div>

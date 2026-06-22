@@ -43,3 +43,27 @@ model Reservation {
 
   status String @default("confirmed") // confirmed | cancelled
 }
+
+model ExcursionReservation {
+  id            String   @id @default(cuid())
+  reference     String   @unique
+  createdAt     DateTime @default(now())
+
+  // Excursion info
+  excursionId   String
+  excursionName String
+
+  // Trip details
+  date          DateTime
+  participants  Int
+  notes         String?
+
+  // Client info
+  clientName    String
+  clientEmail   String
+  clientPhone   String
+
+  // Pricing & status
+  totalPrice    Float
+  status        String @default("confirmed") // confirmed | completed | cancelled
+}

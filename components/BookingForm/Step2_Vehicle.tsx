@@ -16,28 +16,28 @@ interface Step2Props {
 
 const VEHICLES: {
   id: VehicleType;
-  emoji: string;
+  image: string;
   name: string;
   capacity: string;
   desc: string;
 }[] = [
   {
     id: "eco",
-    emoji: "🚗",
+    image: "/cars/eco.png",
     name: "Éco",
     capacity: "Max 3 passagers",
     desc: "Berline confortable, idéale pour petits groupes ou voyageurs d'affaires",
   },
   {
     id: "confort",
-    emoji: "🚙",
+    image: "/cars/confort.png",
     name: "Confort",
     capacity: "Max 7 passagers",
     desc: "SUV spacieux avec plus de confort, parfait pour familles",
   },
   {
     id: "van",
-    emoji: "🚐",
+    image: "/cars/van.png",
     name: "Van",
     capacity: "8 à 12+ passagers",
     desc: "Minibus idéal pour grands groupes ou bagages volumineux",
@@ -77,9 +77,10 @@ export default function Step2Vehicle({
           <div
             key={v.id}
             className={`vehicle-card ${vehicle === v.id ? "selected" : ""}`}
+            style={{ padding: 0, overflow: "hidden" }}
             onClick={() => onChange("vehicle", v.id)}
           >
-            <div className="check">
+            <div className="check" style={{ top: 12, right: 12, zIndex: 10 }}>
               <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
                 <path
                   d="M1 4l3 3 5-6"
@@ -90,10 +91,19 @@ export default function Step2Vehicle({
                 />
               </svg>
             </div>
-            <span className="vehicle-emoji">{v.emoji}</span>
-            <div className="vehicle-name">{v.name}</div>
-            <div className="vehicle-cap">{v.capacity}</div>
-            <div className="vehicle-desc">{v.desc}</div>
+            <div style={{ position: "relative", height: "140px", width: "100%", background: "#f3f4f6" }}>
+              <img 
+                src={v.image} 
+                alt={v.name} 
+                style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+              />
+              <div style={{ position: "absolute", inset: 0, background: vehicle === v.id ? "rgba(124,58,237,0.1)" : "rgba(0,0,0,0.03)" }} />
+            </div>
+            <div style={{ padding: "16px" }}>
+              <div className="vehicle-name" style={{ fontSize: "18px", marginBottom: "4px" }}>{v.name}</div>
+              <div className="vehicle-cap" style={{ background: "var(--purple-50)", color: "var(--purple-700)", display: "inline-block", padding: "2px 8px", borderRadius: "100px", fontSize: "11px", fontWeight: 700, marginBottom: "8px" }}>{v.capacity}</div>
+              <div className="vehicle-desc" style={{ fontSize: "13px", color: "var(--gray-600)", lineHeight: 1.4 }}>{v.desc}</div>
+            </div>
           </div>
         ))}
       </div>

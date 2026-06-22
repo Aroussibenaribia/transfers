@@ -4,9 +4,15 @@ import AdminDashboardClient from "./AdminDashboardClient";
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const reservations = await prisma.reservation.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const [reservations, excursionReservations] = await Promise.all([
+    prisma.reservation.findMany({ orderBy: { createdAt: "desc" } }),
+    prisma.excursionReservation.findMany({ orderBy: { createdAt: "desc" } }),
+  ]);
 
-  return <AdminDashboardClient initialReservations={reservations} />;
+  return (
+    <AdminDashboardClient
+      initialReservations={reservations}
+      initialExcursionReservations={excursionReservations}
+    />
+  );
 }

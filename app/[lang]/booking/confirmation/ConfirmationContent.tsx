@@ -27,14 +27,19 @@ export default function ConfirmationContent() {
         </p>
 
         {/* Reference */}
-        <div className="confirm-ref-box">
+        <div className="confirm-ref-box" style={{ textAlign: "center" }}>
           <div className="confirm-ref-label">{cDict.reference}</div>
           <div className="confirm-ref">{reference}</div>
+          <img 
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(`Reservation Transfert: ${reference} - Total: ${total}€`)}`} 
+            alt="QR Code Réservation" 
+            style={{ borderRadius: 8, marginTop: 16 }} 
+          />
           <p
             style={{
               fontSize: 12,
               color: "var(--text-muted)",
-              marginTop: 8,
+              marginTop: 12,
               marginBottom: 0,
             }}
           >
