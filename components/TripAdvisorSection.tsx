@@ -3,20 +3,20 @@
 export default function TripAdvisorSection({ dict }: { dict: any }) {
   const reviews = [
     {
-      author: "Marie L.",
-      date: "Octobre 2023",
+      author: "Arqam ",
+      date: "Juin 2026",
       text: "Service irréprochable ! Le chauffeur nous attendait à l'aéroport malgré notre retard. Véhicule très propre et conduite prudente. Je recommande vivement pour vos transferts en Tunisie.",
       rating: 5,
     },
     {
-      author: "Jean-Paul M.",
-      date: "Septembre 2023",
+      author: "Lindsey H",
+      date: "Mai 2026",
       text: "Excellente excursion à Carthage et Sidi Bou Saïd. Le guide était passionnant et le van très confortable. Une agence sérieuse sur laquelle on peut compter.",
       rating: 5,
     },
     {
-      author: "Sophie D.",
-      date: "Août 2023",
+      author: "Seyyid",
+      date: "Avril 2026",
       text: "Parfait de bout en bout. Réservation facile en ligne, prix transparents, et un service client très réactif via WhatsApp. Notre transfert vers Hammamet s'est déroulé à merveille.",
       rating: 5,
     },
