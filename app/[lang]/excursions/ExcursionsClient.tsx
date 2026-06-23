@@ -289,7 +289,7 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
           <div style={{ padding: "0 24px 28px", borderTop: "1px solid var(--gray-100)" }}>
             <div style={{ 
               display: "grid", 
-              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", 
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", 
               gap: 32, 
               marginTop: 24 
             }}>
@@ -473,7 +473,7 @@ export default function ExcursionsClient() {
           </div>
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
             gap: 28
           }}>
             {excursions.map(exc => (
