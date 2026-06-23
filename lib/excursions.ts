@@ -1,107 +1,164 @@
 export const excursions = [
   {
-    id: "cap-bon",
-    name: "Excursion Cap Bon",
-    tagline: "Hammamet, Nabeul, Kélibia, Kerkouane, Al Haouaria & Korbous",
-    image: "/excursions/cap-bon.jpg",
-    price: "À partir de 45€",
-    duration: "Journée complète",
-    highlights: ["Plages de Hammamet", "Marchés de Nabeul", "Forteresse de Kélibia", "Site archéologique de Kerkouane"],
-    description: `Partez à la découverte de la péninsule du Cap Bon, l'une des régions les plus verdoyantes et pittoresques de Tunisie. Cette excursion vous emmènera à travers les villes côtières charmantes de Hammamet, Nabeul, Kélibia, Kerkouane, Al Haouaria et Korbous.
-
-Hammamet est connue pour ses belles plages de sable fin et sa médina historique. À Nabeul, vous découvrirez les célèbres marchés de poterie et d'artisanat tunisien. La forteresse de Kélibia offre une vue imprenable sur la mer Méditerranée.
-
-Kerkouane, site inscrit au patrimoine mondial de l'UNESCO, est une ancienne cité punique remarquablement préservée. Pour terminer, la source thermale de Korbous vous offrira une expérience relaxante unique.`,
-    itinerary: ["Départ de votre hôtel le matin", "Visite de Hammamet et sa médina", "Marché d'artisanat à Nabeul", "Forteresse de Kélibia", "Déjeuner local", "Site punique de Kerkouane (UNESCO)", "Retour via Korbous"]
-  },
-  {
-    id: "friguia",
-    name: "Journée Friguia Park",
-    tagline: "Le parc zoologique de renommée mondiale près de Hammamet",
-    image: "/excursions/friguia.jpg",
-    price: "À partir de 35€",
-    duration: "Journée complète",
-    highlights: ["Lions, tigres & girafes", "Spectacle de fauconnerie", "Promenade à dos de chameau", "Spectacle de perroquets"],
-    description: `Passez une journée inoubliable en famille ou entre amis au Friguia Park, situé à environ 20 km de Hammamet. Ô-Transfert prend en charge votre transport aller-retour depuis votre hôtel.
-
-Le Friguia Park est un parc zoologique de renommée mondiale qui abrite une grande variété d'animaux et d'oiseaux : lions, tigres, girafes, éléphants, singes, reptiles, pingouins et bien d'autres encore. Le parc est également connu pour sa grande collection d'oiseaux exotiques.
-
-Lors de votre visite, profitez de nombreuses activités telles que des spectacles de fauconnerie, des promenades à dos de chameau et d'éléphant, ainsi que des spectacles de perroquets. Notre équipe de chauffeurs et de guides touristiques vous accompagnera tout au long de votre visite.`,
-    itinerary: ["Prise en charge à votre hôtel", "Trajet confortable vers Friguia Park", "Découverte des animaux et oiseaux", "Spectacles interactifs", "Déjeuner libre dans le parc", "Retour à votre hôtel en soirée"]
-  },
-  {
-    id: "grand-tunis",
-    name: "Excursion Grand Tunis",
-    tagline: "Musée du Bardo, Tunis & sa médina, Carthage & Sidi Bou Saïd",
+    id: "tunis-carthage",
+    name: "Journée d’Excursion : Tunis – Carthage – Sidi Bou Saïd",
+    tagline: "Découverte des trésors culturels et historiques de la région de Tunis",
     image: "/excursions/grand-tunis.jpg",
-    price: "À partir de 55€",
+    videos: ["/excursions/musee.mp4"],
+    price: "Sur devis",
     duration: "Journée complète",
-    highlights: ["Musée national du Bardo", "Médina de Tunis (UNESCO)", "Ruines de Carthage", "Village bleu de Sidi Bou Saïd"],
-    description: `Explorez la richesse historique et culturelle de la région de Tunis lors de cette excursion complète qui vous fera voyager à travers les millénaires.
+    highlights: ["Médina de Tunis", "Carthage (Thermes d’Antonin)", "Sidi Bou Saïd"],
+    description: `Partez pour une journée inoubliable à la découverte des trésors culturels et historiques de la région de Tunis !
+    
+**Le matin – Départ**
+• Prise en charge depuis votre lieu de séjour.
 
-Commencez par le Musée national du Bardo, l'un des plus beaux musées du monde méditerranéen, abritant la plus grande collection de mosaïques romaines au monde. Plongez ensuite dans la médina de Tunis, classée au patrimoine mondial de l'UNESCO, avec ses souks labyrinthiques et ses mosquées historiques.
+**Visite de la Médina de Tunis**
+• Promenade à travers les ruelles pittoresques de la vieille ville.
+• Arrêt à la mosquée Zitouna (vue extérieure) et temps libre pour flâner dans les souks artisanaux.
 
-Les ruines de Carthage, l'une des grandes puissances de l'antiquité, vous transporteront 3 000 ans en arrière. Terminez la journée dans le magnifique village de Sidi Bou Saïd, avec ses maisons blanches aux portes bleues surplombant la Méditerranée.`,
-    itinerary: ["Départ de votre hôtel", "Musée du Bardo (2h)", "Médina de Tunis & souks", "Déjeuner en médina", "Carthage (Thermes d'Antonin, Tophet)", "Sidi Bou Saïd au coucher du soleil", "Retour à votre hôtel"]
+**La Pause – Déjeuner typique (en extra)**
+• Déjeuner dans un restaurant local avec des spécialités tunisiennes.
+
+**Découverte de Carthage**
+• Visite des sites archéologiques : les Thermes d’Antonin, le Tophet punique, et la colline de Byrsa.
+• Un voyage fascinant à travers l’histoire de la civilisation carthaginoise et romaine.
+
+**Flânerie à Sidi Bou Saïd**
+• Détente dans ce village aux maisons blanches et volets bleus surplombant la mer.
+• Temps libre pour savourer un café, visiter des galeries d’art ou faire quelques achats.
+
+**Fin de la journée – Retour**
+• Retour à votre lieu de séjour en fin de journée, des souvenirs plein la tête.
+
+**✅ Inclus :**
+• Transport en véhicule climatisé
+• Chauffeur professionnel`,
+    itinerary: ["Départ matin", "Médina de Tunis", "Déjeuner local", "Site de Carthage", "Sidi Bou Saïd", "Retour au lieu de séjour"]
   },
   {
-    id: "dougga",
-    name: "Excursion Dougga",
-    tagline: "Zaghouan, Thuburbo Majus & le site romain de Dougga",
-    image: "/excursions/dougga.jpg",
-    price: "À partir de 65€",
-    duration: "Journée complète",
-    highlights: ["Temple des Eaux de Zaghouan", "Cité romaine de Thuburbo Majus", "Dougga — site UNESCO", "Capitole et Théâtre romain"],
-    description: `Cette excursion est un véritable voyage dans le temps, à la découverte des trésors archéologiques romains de la Tunisie intérieure.
-
-La journée débute par le Temple des Eaux de Zaghouan, un monument romain spectaculaire niché dans les montagnes. Vous visitez ensuite les ruines de Thuburbo Majus, une ancienne cité romaine bien conservée avec son forum, ses thermes et ses temples.
-
-Le clou de la journée est le site de Dougga, classé au patrimoine mondial de l'UNESCO — l'un des sites archéologiques romains les mieux préservés d'Afrique du Nord. Son Capitole, son Théâtre romain et ses nombreux monuments en font un lieu exceptionnel.`,
-    itinerary: ["Départ matinal de votre hôtel", "Temple des Eaux de Zaghouan", "Cité romaine de Thuburbo Majus", "Déjeuner dans un restaurant local", "Site de Dougga (UNESCO)", "Retour en soirée"]
-  },
-  {
-    id: "sahel",
-    name: "Excursion Sahel",
-    tagline: "Monastir, Sousse & Port Kantaoui",
+    id: "monastir-sousse",
+    name: "Journée d’Excursion : Monastir & Sousse",
+    tagline: "Entre mer, histoire et patrimoine méditerranéen",
     image: "/excursions/sahel.jpg",
-    price: "À partir de 40€",
+    videos: [],
+    price: "Sur devis",
     duration: "Journée complète",
-    highlights: ["Ribat de Monastir", "Médina de Sousse (UNESCO)", "Port Kantaoui & marina", "Plages du Sahel"],
-    description: `Le Sahel tunisien est une région côtière magnifique, riche en histoire et en charme méditerranéen. Cette excursion vous en dévoilera les plus beaux joyaux.
+    highlights: ["Ribat de Monastir", "Mausolée de Bourguiba", "Médina de Sousse (UNESCO)", "Souks colorés"],
+    description: `**Le matin – Départ**
+• Prise en charge depuis votre hôtel ou lieu de séjour.
 
-À Monastir, vous découvrirez le Ribat, une forteresse arabe du VIIIe siècle offrant une vue imprenable sur la mer, ainsi que le Mausolée de Bourguiba. Sousse, la «Perle du Sahel», vous accueillera avec sa médina classée au patrimoine mondial de l'UNESCO et ses plages.
+**Visite de Monastir**
+• Découverte du Ribat de Monastir, l’un des plus anciens et impressionnants monuments islamiques en Tunisie.
+• Visite du mausolée de Habib Bourguiba, premier président de la République tunisienne.
+• Temps libre pour une balade sur la marina et le front de mer.
 
-Pour finir, le port de plaisance de Kantaoui, avec ses boutiques, ses restaurants et sa marina pittoresque, est l'endroit idéal pour se détendre et profiter de l'ambiance méditerranéenne.`,
-    itinerary: ["Prise en charge à votre hôtel", "Monastir — Ribat & Mausolée de Bourguiba", "Sousse — Médina & Grande Mosquée", "Déjeuner au bord de mer", "Port Kantaoui & promenade", "Retour à votre hôtel"]
+**Déjeuner (en Extra)**
+• Pause déjeuner dans un restaurant typique en bord de mer avec menu tunisien.
+
+**Départ pour Sousse**
+• Trajet court jusqu’à Sousse, ville inscrite au patrimoine mondial de l’UNESCO.
+
+**Visite de la Médina de Sousse**
+• Promenade à travers les ruelles de la médina, classée par l’UNESCO.
+• Visite du Ribat de Sousse et arrêt photo près de la Grande Mosquée.
+• Temps libre pour faire du shopping dans les souks colorés : épices, artisanat, poterie, textiles.
+
+**Fin de la journée**
+• Retour à votre hôtel en fin d’après-midi.
+
+**✅ Inclus dans l’excursion :**
+• Transport aller-retour en véhicule climatisé
+• Chauffeur professionnel
+
+**🎒 À prévoir :**
+• Chaussures confortables
+• Appareil photo`,
+    itinerary: ["Prise en charge à votre hôtel", "Monastir (Ribat, Mausolée, Marina)", "Déjeuner au bord de mer", "Sousse (Médina, Ribat, Souks)", "Retour à l'hôtel"]
   },
   {
-    id: "eljem",
-    name: "Excursion El Jem",
-    tagline: "Kairouan, Colossée d'El Jem & Monastir",
+    id: "kairouan-eljem",
+    name: "Journée d’Excursion : Kairouan & El Jem",
+    tagline: "Un voyage au cœur du patrimoine islamique et romain de la Tunisie",
     image: "/excursions/eljem.jpg",
-    price: "À partir de 60€",
+    videos: ["/excursions/karwen.mp4", "/excursions/jamm.mp4"],
+    price: "Sur devis",
     duration: "Journée complète",
-    highlights: ["Grande Mosquée de Kairouan", "Bassins des Aghlabides", "Colossée d'El Jem (UNESCO)", "Musée archéologique d'El Jem"],
-    description: `Cette excursion inoubliable vous emmène à la découverte de deux des plus grands sites historiques de Tunisie : la ville sainte de Kairouan et le majestueux Colossée d'El Jem.
+    highlights: ["Grande Mosquée Okba Ibn Nafaa", "Bassin des Aghlabides", "Amphithéâtre d’El Jem (UNESCO)"],
+    description: `**Le matin – Départ**
+• Départ matinal depuis votre hôtel ou lieu de séjour.
 
-Kairouan, la quatrième ville sainte de l'Islam, est une véritable perle du patrimoine islamique mondial. Sa Grande Mosquée fondée en 670 apr. J.-C. est l'une des plus importantes du monde. Les Bassins des Aghlabides, système hydraulique du IXe siècle, témoignent du génie des bâtisseurs de l'époque.
+**Visite de Kairouan, Ville Sainte**
+• Visite de la Grande Mosquée Okba Ibn Nafaa, l’une des plus anciennes du monde musulman.
+• Découverte du bassin des Aghlabides, impressionnante œuvre d’ingénierie hydraulique médiévale.
+• Pause gourmande dans une pâtisserie locale pour goûter les fameux makrouds de Kairouan.
 
-Le Colossée d'El Jem, classé au patrimoine mondial de l'UNESCO, est l'un des amphithéâtres romains les mieux conservés du monde. Avec une capacité de 35 000 spectateurs, il rivalise avec le Colisée de Rome.`,
-    itinerary: ["Départ de votre hôtel", "Kairouan — Grande Mosquée", "Bassins des Aghlabides", "Déjeuner à Kairouan (cuisine locale)", "Colossée d'El Jem (UNESCO)", "Musée archéologique", "Retour à votre hôtel"]
+**Départ pour El Jem**
+• Route en direction d’El Jem à travers les paysages ruraux du Sahel tunisien.
+
+**Déjeuner**
+• Déjeuner dans un restaurant typique de la région, avec menu tunisien traditionnel.
+
+**Visite de l’Amphithéâtre d’El Jem**
+• Exploration du spectaculaire amphithéâtre romain, classé au patrimoine mondial de l’UNESCO.
+• Temps libre pour prendre des photos et visiter le musée archéologique.
+
+**Fin de la journée – Retour**
+• Départ pour le retour vers votre hôtel.
+• Arrivée en fin de journée avec des souvenirs uniques.
+
+**✅ Ce qui est inclus :**
+• Transport en véhicule climatisé
+• Chauffeur professionnel
+
+**🎒 À prévoir :**
+• Chaussures confortables
+• Appareil photo`,
+    itinerary: ["Départ matinal", "Grande Mosquée de Kairouan", "Bassin des Aghlabides & Makrouds", "Déjeuner local", "Amphithéâtre romain d'El Jem", "Retour à l'hôtel"]
   },
   {
-    id: "culinaire",
-    name: "Route Culinaire de Tunisie",
-    tagline: "Découvrez la Tunisie à travers ses saveurs et ses marchés",
-    image: "/excursions/culinaire.jpg",
-    price: "À partir de 50€",
+    id: "cap-bon",
+    name: "Journée d’Excursion : Le Cap Bon",
+    tagline: "Un voyage entre nature, artisanat et vestiges antiques",
+    image: "/excursions/cap-bon.jpg",
+    videos: [],
+    price: "Sur devis",
     duration: "Journée complète",
-    highlights: ["Marchés locaux & épices", "Atelier de cuisine tunisienne", "Dégustation de plats typiques", "Visite d'un moulin à huile d'olive"],
-    description: `Partez à la découverte de la Tunisie à travers l'un de ses trésors les plus délicieux : sa cuisine. Cette excursion unique vous plonge au cœur de la culture culinaire tunisienne, entre épices, saveurs et traditions ancestrales.
+    highlights: ["Poterie de Nabeul", "Forteresse de Kelibia", "Cité punique de Kerkouane", "Sources thermales de Korbous"],
+    description: `**Le matin – Départ**
+• Prise en charge depuis votre hôtel ou lieu de séjour.
 
-La journée commence par la visite des marchés locaux où les couleurs et les arômes des épices, des herbes et des produits frais vous transporteront. Un artisan cuisinier vous initiera aux secrets de la cuisine tunisienne : tajine, brik, couscous, harissa maison.
+**Visite de Nabeul**
+• Capitale de la poterie et de la céramique tunisienne.
+• Démonstration d’artisanat local et visite des ateliers.
+• Temps libre pour découvrir les souks colorés (épices, cuir, tissage).
 
-Vous visiterez également un moulin à huile d'olive traditionnel pour comprendre l'importance de l'huile d'olive dans la gastronomie locale. Le repas de midi sera un véritable festin de spécialités régionales préparées avec les produits achetés le matin.`,
-    itinerary: ["Départ de votre hôtel", "Visite du marché central", "Atelier cuisine tunisienne", "Déjeuner gastronomique (plats préparés ensemble)", "Moulin à huile d'olive traditionnel", "Dégustation de pâtisseries tunisiennes", "Retour à votre hôtel"]
+**Kelibia**
+• Traversée des paysages agricoles du Cap Bon.
+• À Kelibia, visite de la célèbre forteresse surplombant la mer.
+
+**Déjeuner (en extra)**
+• Déjeuner dans un restaurant typique, avec spécialités locales de la mer.
+
+**Kerkouane, cité punique**
+• Découverte de ce site archéologique exceptionnel classé à l’UNESCO.
+• Balade guidée parmi les vestiges d’une ville punique parfaitement conservée.
+
+**Korbous, sources thermales naturelles**
+• Route panoramique jusqu’à Korbous, nichée entre mer et montagne.
+• Pause détente près des sources thermales naturelles, réputées pour leurs bienfaits.
+• Temps libre pour se relaxer et profiter de la vue spectaculaire.
+
+**Fin de la journée – Retour**
+• Retour en fin de journée à votre lieu de séjour avec des souvenirs inoubliables.
+
+**✅ Ce qui est inclus :**
+• Transport en véhicule climatisé
+• Chauffeur professionnel
+
+**🎒 À prévoir :**
+• Appareil photo
+• Maillot et serviette (si baignade à Korbous)`,
+    itinerary: ["Départ de votre hôtel", "Nabeul (poterie et souks)", "Forteresse de Kelibia", "Déjeuner spécialité fruits de mer", "Site punique de Kerkouane", "Sources thermales de Korbous", "Retour à l'hôtel"]
   }
 ];

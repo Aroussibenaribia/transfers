@@ -227,6 +227,7 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
     <>
       <div
         style={{
+          gridColumn: isExpanded ? "1 / -1" : "auto",
           borderRadius: "20px", overflow: "hidden",
           boxShadow: isExpanded ? "0 20px 40px rgba(124,58,237,0.15)" : "0 4px 16px rgba(0,0,0,0.08)",
           border: isExpanded ? "2px solid var(--purple-300)" : "2px solid transparent",
@@ -286,55 +287,88 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
         {/* Expanded content */}
         {isExpanded && (
           <div style={{ padding: "0 24px 28px", borderTop: "1px solid var(--gray-100)" }}>
-            {/* Description */}
-            <div style={{ marginTop: 20, marginBottom: 24 }}>
-              <h4 style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 12 }}>📖 Description</h4>
-              {excursion.description.split("\n\n").map((p, i) => (
-                <p key={i} style={{ fontSize: 14, color: "#374151", lineHeight: 1.7, marginBottom: 12 }}>{p}</p>
-              ))}
-            </div>
-
-            {/* Itinerary */}
-            <div style={{
-              background: "var(--purple-50)", borderRadius: "12px",
-              padding: "20px", marginBottom: 24, border: "1px solid var(--purple-100)"
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", 
+              gap: 32, 
+              marginTop: 24 
             }}>
-              <h4 style={{ fontSize: 15, fontWeight: 700, color: "var(--purple-800)", marginBottom: 14 }}>🗺️ Programme de la journée</h4>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {excursion.itinerary.map((step, i) => (
-                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                    <div style={{
-                      width: 28, height: 28, minWidth: 28, background: "var(--purple-700)",
-                      color: "#fff", borderRadius: "50%", display: "flex", alignItems: "center",
-                      justifyContent: "center", fontSize: 12, fontWeight: 700
-                    }}>{i + 1}</div>
-                    <span style={{ fontSize: 14, color: "#374151", paddingTop: 4, lineHeight: 1.5 }}>{step}</span>
-                  </div>
+              
+              {/* Left Column: Description & Videos */}
+              {/* Left Column: Description & Videos */}
+              <div>
+                <h4 style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 12 }}>📖 Description</h4>
+                {excursion.description.split("\n\n").map((p, i) => (
+                  <p key={i} style={{ fontSize: 14, color: "#374151", lineHeight: 1.7, marginBottom: 12 }}>{p}</p>
                 ))}
+
+                {excursion.videos && excursion.videos.length > 0 && (
+                  <div style={{ marginTop: 24 }}>
+                    <h4 style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 12 }}>🎥 Vidéos de l'excursion</h4>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+                      {excursion.videos.map((vid: string) => (
+                        <video key={vid} controls style={{ width: "100%", borderRadius: 12, border: "1px solid var(--gray-200)", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}>
+                          <source src={vid} type="video/mp4" />
+                          Votre navigateur ne supporte pas la vidéo.
+                        </video>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column: Itinerary */}
+              <div>
+                <div style={{
+                  background: "var(--purple-50)", borderRadius: "12px",
+                  padding: "20px", border: "1px solid var(--purple-100)"
+                }}>
+                  <h4 style={{ fontSize: 16, fontWeight: 700, color: "var(--purple-700)", marginBottom: 16 }}>
+                    📍 Itinéraire de l'excursion
+                  </h4>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {excursion.itinerary.map((step, i) => (
+                      <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                        <div style={{
+                          width: 28, height: 28, minWidth: 28, background: "var(--purple-700)",
+                          color: "#fff", borderRadius: "50%", display: "flex", alignItems: "center",
+                          justifyContent: "center", fontSize: 12, fontWeight: 700
+                        }}>{i + 1}</div>
+                        <span style={{ fontSize: 14, color: "#374151", paddingTop: 4, lineHeight: 1.5 }}>{step}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ marginTop: 24 }}>
+                  <h4 style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 12 }}>✨ Prêt à réserver ?</h4>
+                  <button
+                    onClick={() => setBooking(!booking)}
+                    style={{
+                      width: "100%", padding: "14px", borderRadius: "100px",
+                      background: "linear-gradient(135deg, #7c3aed, #a855f7)", color: "#fff",
+                      border: "none", fontSize: 16, fontWeight: 700, cursor: "pointer",
+                      boxShadow: "0 8px 20px rgba(124,58,237,0.3)",
+                      transition: "transform 0.2s"
+                    }}
+                    onMouseOver={e => e.currentTarget.style.transform = "translateY(-2px)"}
+                    onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}
+                  >
+                    {booking ? "Fermer le formulaire" : "Réserver cette excursion"}
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* Reserve button */}
-            <button
-              onClick={() => setBooking(true)}
-              style={{
-                width: "100%", padding: "16px",
-                background: "linear-gradient(135deg, var(--purple-700), var(--purple-500))",
-                color: "#fff", border: "none", borderRadius: "100px",
-                fontSize: 16, fontWeight: 700, cursor: "pointer",
-                boxShadow: "0 8px 20px rgba(124,58,237,0.35)",
-                transition: "all 0.2s"
-              }}
-              onMouseOver={e => (e.currentTarget.style.transform = "translateY(-2px)")}
-              onMouseOut={e => (e.currentTarget.style.transform = "translateY(0)")}
-            >
-              🗓️ Réserver cette excursion
-            </button>
+            {/* Booking Form (Full Width Below) */}
+            {booking && (
+              <div style={{ marginTop: 24 }}>
+                <BookingModal excursion={excursion} onClose={() => setBooking(false)} />
+              </div>
+            )}
           </div>
         )}
       </div>
-
-      {booking && <BookingModal excursion={excursion} onClose={() => setBooking(false)} />}
     </>
   );
 }

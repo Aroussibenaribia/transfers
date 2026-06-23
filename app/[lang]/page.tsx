@@ -3,6 +3,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import HomeHero from "@/components/HomeHero";
 import TripAdvisorSection from "@/components/TripAdvisorSection";
+import ContactSection from "@/components/ContactSection";
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const resolvedParams = await params;
@@ -82,6 +83,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
       {/* TripAdvisor Reviews */}
       <TripAdvisorSection dict={dict} />
+
+      {/* Contact Info */}
+      <ContactSection />
 
       {/* Features */}
       <section className="features">
