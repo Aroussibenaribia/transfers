@@ -42,9 +42,9 @@ const MIN_FARE: Record<VehicleType, number> = {
 const LANG_SURCHARGE: Record<DriverLang, number> = {
   ar: 0,
   fr: 0,
-  en: 10,
-  de: 15,
-  it: 15,
+  en: 0,
+  de: 0,
+  it: 0,
 };
 
 export function calculatePrice(input: PricingInput): PricingBreakdown {
@@ -87,7 +87,7 @@ export const VEHICLE_DESCRIPTIONS: Record<VehicleType, string> = {
 export const LANG_LABELS: Record<DriverLang, string> = {
   ar: "Arabe",
   fr: "Français",
-  en: "Anglais (+10€)",
-  de: "Allemand (+15€)",
-  it: "Italien (+15€)",
+  en: "Anglais",
+  de: "Allemand",
+  it: "Italien",
 };

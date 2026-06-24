@@ -11,9 +11,9 @@ interface Step3Props {
 const LANGUAGES: { id: DriverLang; flag: string; name: string; price: string }[] = [
   { id: "ar", flag: "🇹🇳", name: "Arabe", price: "Inclus" },
   { id: "fr", flag: "🇫🇷", name: "Français", price: "Inclus" },
-  { id: "en", flag: "🇬🇧", name: "Anglais", price: "+10€" },
-  { id: "de", flag: "🇩🇪", name: "Allemand", price: "+15€" },
-  { id: "it", flag: "🇮🇹", name: "Italien", price: "+15€" },
+  { id: "en", flag: "🇬🇧", name: "Anglais", price: "Inclus" },
+  { id: "de", flag: "🇩🇪", name: "Allemand", price: "Inclus" },
+  { id: "it", flag: "🇮🇹", name: "Italien", price: "Inclus" },
 ];
 
 export default function Step3Options({ extraBaggage, driverLang, onChange }: Step3Props) {
@@ -60,9 +60,7 @@ export default function Step3Options({ extraBaggage, driverLang, onChange }: Ste
             <div
               className="lang-price"
               style={{
-                color: lang.id === "ar" || lang.id === "fr"
-                  ? "var(--success)"
-                  : "var(--primary)",
+                color: "var(--success)",
               }}
             >
               {lang.price}
@@ -71,7 +69,7 @@ export default function Step3Options({ extraBaggage, driverLang, onChange }: Ste
         ))}
       </div>
       <p className="form-hint" style={{ textAlign: "center" }}>
-        Les chauffeurs arabophones et francophones sont disponibles sans surcoût
+        Tous nos chauffeurs multilingues sont inclus sans surcoût
       </p>
     </div>
   );

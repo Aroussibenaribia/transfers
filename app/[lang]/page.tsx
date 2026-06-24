@@ -87,57 +87,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       {/* Contact Info */}
       <ContactSection />
 
-      {/* Features */}
-      <section className="features">
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", marginBottom: 12 }}>
-            {dict.features.title}
-          </h2>
-          <p style={{ color: "var(--text-muted)", maxWidth: 480, margin: "0 auto" }}>
-            {dict.features.subtitle}
-          </p>
-        </div>
-        <div className="features-grid">
-          {[
-            {
-              icon: "⚡",
-              title: dict.features.f1_title,
-              desc: dict.features.f1_desc,
-            },
-            {
-              icon: "🗺️",
-              title: dict.features.f2_title,
-              desc: dict.features.f2_desc,
-            },
-            {
-              icon: "🚗",
-              title: dict.features.f3_title,
-              desc: dict.features.f3_desc,
-            },
-            {
-              icon: "🌍",
-              title: dict.features.f4_title,
-              desc: dict.features.f4_desc,
-            },
-            {
-              icon: "💳",
-              title: dict.features.f5_title,
-              desc: dict.features.f5_desc,
-            },
-            {
-              icon: "✈️",
-              title: dict.features.f6_title,
-              desc: dict.features.f6_desc,
-            },
-          ].map((f) => (
-            <div key={f.title} className="feature-card">
-              <div className="feature-icon">{f.icon}</div>
-              <div className="feature-title">{f.title}</div>
-              <div className="feature-desc">{f.desc}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* Footer */}
       <footer
