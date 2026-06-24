@@ -11,12 +11,8 @@ export interface Location {
 export const LOCATIONS: Location[] = [
   // Airports
   { id: "TUN", name: "Aéroport Tunis-Carthage (TUN)", type: "airport", airportCode: "TUN", region: "Tunis" },
+  { id: "NBE", name: "Aéroport Enfidha-Hammamet (NBE)", type: "airport", airportCode: "NBE", region: "Sousse" },
   { id: "MIR", name: "Aéroport Monastir Habib Bourguiba (MIR)", type: "airport", airportCode: "MIR", region: "Monastir" },
-  { id: "DJE", name: "Aéroport Djerba-Zarzis (DJE)", type: "airport", airportCode: "DJE", region: "Djerba" },
-  { id: "SFA", name: "Aéroport Sfax-Thyna (SFA)", type: "airport", airportCode: "SFA", region: "Sfax" },
-  { id: "TOE", name: "Aéroport Tozeur-Nefta (TOE)", type: "airport", airportCode: "TOE", region: "Tozeur" },
-  { id: "TBJ", name: "Aéroport Tabarka-Aïn Draham (TBJ)", type: "airport", airportCode: "TBJ", region: "Tabarka" },
-  { id: "GAF", name: "Aéroport Gafsa-Ksar (GAF)", type: "airport", airportCode: "GAF", region: "Gafsa" },
 
   // Cities — Grand Tunis
   { id: "tunis", name: "Tunis (Centre-Ville)", type: "city", region: "Tunis" },
@@ -101,6 +97,12 @@ const DISTANCES: Record<string, number> = {
   "MIR-sfax": 115,
   "MIR-hammamet": 100,
   "MIR-tunis": 160,
+  "NBE-sousse": 40,
+  "NBE-hammamet": 45,
+  "NBE-tunis": 100,
+  "NBE-monastir": 60,
+  "NBE-kairouan": 60,
+  "NBE-mahdia": 100,
   "DJE-medenine": 60,
   "DJE-gabes": 90,
   "DJE-sfax": 200,

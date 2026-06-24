@@ -29,7 +29,7 @@ export default function ContactSection() {
                 <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--purple-100)", color: "var(--purple-700)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
                   📞
                 </div>
-                <div style={{ fontSize: 16, fontWeight: 600, color: "#374151" }}>+216 55936 028</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color: "#374151" }}>+216 25 936 137</div>
               </div>
               
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
