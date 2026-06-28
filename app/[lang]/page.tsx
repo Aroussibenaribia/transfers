@@ -4,6 +4,7 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import HomeHero from "@/components/HomeHero";
 import TripAdvisorSection from "@/components/TripAdvisorSection";
 import ContactSection from "@/components/ContactSection";
+import CustomerVideosSection from "@/components/CustomerVideosSection";
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const resolvedParams = await params;
@@ -45,6 +46,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
       {/* Booking Form */}
       <BookingForm />
+
+      {/* Customer Videos */}
+      <CustomerVideosSection />
 
       {/* Excursions Teaser */}
       <section style={{ padding: "72px 24px", background: "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%)", position: "relative", overflow: "hidden" }}>
