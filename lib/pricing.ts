@@ -73,9 +73,9 @@ export function calculatePrice(input: PricingInput): PricingBreakdown {
 }
 
 export const VEHICLE_LABELS: Record<VehicleType, string> = {
-  eco: "Éco — Jusqu'à 3 passagers",
-  confort: "Confort — Jusqu'à 7 passagers",
-  van: "Van — 8 à 12+ passagers",
+  eco: "Éco (MG 5) — Jusqu'à 3 passagers",
+  confort: "Confort (Peugeot Traveller) — Jusqu'à 7 passagers",
+  van: "Van (Ford Transit) — 8 à 12+ passagers",
 };
 
 export const VEHICLE_DESCRIPTIONS: Record<VehicleType, string> = {
