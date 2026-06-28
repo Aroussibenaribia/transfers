@@ -1,164 +1,50 @@
 export const excursions = [
   {
     id: "tunis-carthage",
-    name: "Journée d’Excursion : Tunis – Carthage – Sidi Bou Saïd",
+    name: "Journée d'Excursion : Tunis – Carthage – Sidi Bou Saïd",
     tagline: "Découverte des trésors culturels et historiques de la région de Tunis",
     image: "/excursions/grand-tunis.jpg",
     videos: ["/excursions/musee.mp4"],
-    price: "Sur devis",
     duration: "Journée complète",
-    highlights: ["Médina de Tunis", "Carthage (Thermes d’Antonin)", "Sidi Bou Saïd"],
-    description: `Partez pour une journée inoubliable à la découverte des trésors culturels et historiques de la région de Tunis !
-    
-**Le matin – Départ**
-• Prise en charge depuis votre lieu de séjour.
-
-**Visite de la Médina de Tunis**
-• Promenade à travers les ruelles pittoresques de la vieille ville.
-• Arrêt à la mosquée Zitouna (vue extérieure) et temps libre pour flâner dans les souks artisanaux.
-
-**La Pause – Déjeuner typique (en extra)**
-• Déjeuner dans un restaurant local avec des spécialités tunisiennes.
-
-**Découverte de Carthage**
-• Visite des sites archéologiques : les Thermes d’Antonin, le Tophet punique, et la colline de Byrsa.
-• Un voyage fascinant à travers l’histoire de la civilisation carthaginoise et romaine.
-
-**Flânerie à Sidi Bou Saïd**
-• Détente dans ce village aux maisons blanches et volets bleus surplombant la mer.
-• Temps libre pour savourer un café, visiter des galeries d’art ou faire quelques achats.
-
-**Fin de la journée – Retour**
-• Retour à votre lieu de séjour en fin de journée, des souvenirs plein la tête.
-
-**✅ Inclus :**
-• Transport en véhicule climatisé
-• Chauffeur professionnel`,
-    itinerary: ["Départ matin", "Médina de Tunis", "Déjeuner local", "Site de Carthage", "Sidi Bou Saïd", "Retour au lieu de séjour"]
+    highlights: ["Médina de Tunis", "Carthage (Thermes d'Antonin)", "Sidi Bou Saïd"],
+    description: "Partez pour une journée inoubliable à la découverte des trésors culturels et historiques de la région de Tunis !\n\n**Le matin – Départ**\n• Prise en charge depuis votre lieu de séjour.\n\n**Visite de la Médina de Tunis**\n• Promenade à travers les ruelles pittoresques de la vieille ville.\n• Arrêt à la mosquée Zitouna (vue extérieure) et temps libre pour flâner dans les souks artisanaux.\n\n**La Pause – Déjeuner typique (en extra)**\n• Déjeuner dans un restaurant local avec des spécialités tunisiennes.\n\n**Découverte de Carthage**\n• Visite des sites archéologiques : les Thermes d'Antonin, le Tophet punique, et la colline de Byrsa.\n• Un voyage fascinant à travers l'histoire de la civilisation carthaginoise et romaine.\n\n**Flânerie à Sidi Bou Saïd**\n• Détente dans ce village aux maisons blanches et volets bleus surplombant la mer.\n• Temps libre pour savourer un café, visiter des galeries d'art ou faire quelques achats.\n\n**Fin de la journée – Retour**\n• Retour à votre lieu de séjour en fin de journée, des souvenirs plein la tête.\n\n**Inclus :**\n• Transport en véhicule climatisé\n• Chauffeur professionnel",
+    itinerary: ["Départ matin", "Médina de Tunis", "Déjeuner local", "Site de Carthage", "Sidi Bou Saïd", "Retour au lieu de séjour"],
+    packs: { s: 90, m: 120, l: 35 },
   },
   {
     id: "monastir-sousse",
-    name: "Journée d’Excursion : Monastir & Sousse",
+    name: "Journée d'Excursion : Monastir & Sousse",
     tagline: "Entre mer, histoire et patrimoine méditerranéen",
     image: "/excursions/sahel.jpg",
     videos: [],
-    price: "Sur devis",
     duration: "Journée complète",
     highlights: ["Ribat de Monastir", "Mausolée de Bourguiba", "Médina de Sousse (UNESCO)", "Souks colorés"],
-    description: `**Le matin – Départ**
-• Prise en charge depuis votre hôtel ou lieu de séjour.
-
-**Visite de Monastir**
-• Découverte du Ribat de Monastir, l’un des plus anciens et impressionnants monuments islamiques en Tunisie.
-• Visite du mausolée de Habib Bourguiba, premier président de la République tunisienne.
-• Temps libre pour une balade sur la marina et le front de mer.
-
-**Déjeuner (en Extra)**
-• Pause déjeuner dans un restaurant typique en bord de mer avec menu tunisien.
-
-**Départ pour Sousse**
-• Trajet court jusqu’à Sousse, ville inscrite au patrimoine mondial de l’UNESCO.
-
-**Visite de la Médina de Sousse**
-• Promenade à travers les ruelles de la médina, classée par l’UNESCO.
-• Visite du Ribat de Sousse et arrêt photo près de la Grande Mosquée.
-• Temps libre pour faire du shopping dans les souks colorés : épices, artisanat, poterie, textiles.
-
-**Fin de la journée**
-• Retour à votre hôtel en fin d’après-midi.
-
-**✅ Inclus dans l’excursion :**
-• Transport aller-retour en véhicule climatisé
-• Chauffeur professionnel
-
-**🎒 À prévoir :**
-• Chaussures confortables
-• Appareil photo`,
-    itinerary: ["Prise en charge à votre hôtel", "Monastir (Ribat, Mausolée, Marina)", "Déjeuner au bord de mer", "Sousse (Médina, Ribat, Souks)", "Retour à l'hôtel"]
+    description: "**Le matin – Départ**\n• Prise en charge depuis votre hôtel ou lieu de séjour.\n\n**Visite de Monastir**\n• Découverte du Ribat de Monastir.\n• Visite du mausolée de Habib Bourguiba.\n• Temps libre pour une balade sur la marina et le front de mer.\n\n**Déjeuner (en Extra)**\n• Pause déjeuner dans un restaurant typique en bord de mer avec menu tunisien.\n\n**Départ pour Sousse**\n• Trajet court jusqu'à Sousse, ville inscrite au patrimoine mondial de l'UNESCO.\n\n**Visite de la Médina de Sousse**\n• Promenade à travers les ruelles de la médina, classée par l'UNESCO.\n• Visite du Ribat de Sousse et arrêt photo près de la Grande Mosquée.\n• Temps libre pour faire du shopping dans les souks colorés.\n\n**Fin de la journée**\n• Retour à votre hôtel en fin d'après-midi.\n\n**Inclus :**\n• Transport aller-retour en véhicule climatisé\n• Chauffeur professionnel\n\n**A prévoir :**\n• Chaussures confortables\n• Appareil photo",
+    itinerary: ["Prise en charge à votre hôtel", "Monastir (Ribat, Mausolée, Marina)", "Déjeuner au bord de mer", "Sousse (Médina, Ribat, Souks)", "Retour à l'hôtel"],
+    packs: { s: 100, m: 130, l: 35 },
   },
   {
     id: "kairouan-eljem",
-    name: "Journée d’Excursion : Kairouan & El Jem",
-    tagline: "Un voyage au cœur du patrimoine islamique et romain de la Tunisie",
+    name: "Journée d'Excursion : Kairouan & El Jem",
+    tagline: "Un voyage au coeur du patrimoine islamique et romain de la Tunisie",
     image: "/excursions/eljem.jpg",
     videos: ["/excursions/karwen.mp4", "/excursions/jamm.mp4"],
-    price: "Sur devis",
     duration: "Journée complète",
-    highlights: ["Grande Mosquée Okba Ibn Nafaa", "Bassin des Aghlabides", "Amphithéâtre d’El Jem (UNESCO)"],
-    description: `**Le matin – Départ**
-• Départ matinal depuis votre hôtel ou lieu de séjour.
-
-**Visite de Kairouan, Ville Sainte**
-• Visite de la Grande Mosquée Okba Ibn Nafaa, l’une des plus anciennes du monde musulman.
-• Découverte du bassin des Aghlabides, impressionnante œuvre d’ingénierie hydraulique médiévale.
-• Pause gourmande dans une pâtisserie locale pour goûter les fameux makrouds de Kairouan.
-
-**Départ pour El Jem**
-• Route en direction d’El Jem à travers les paysages ruraux du Sahel tunisien.
-
-**Déjeuner**
-• Déjeuner dans un restaurant typique de la région, avec menu tunisien traditionnel.
-
-**Visite de l’Amphithéâtre d’El Jem**
-• Exploration du spectaculaire amphithéâtre romain, classé au patrimoine mondial de l’UNESCO.
-• Temps libre pour prendre des photos et visiter le musée archéologique.
-
-**Fin de la journée – Retour**
-• Départ pour le retour vers votre hôtel.
-• Arrivée en fin de journée avec des souvenirs uniques.
-
-**✅ Ce qui est inclus :**
-• Transport en véhicule climatisé
-• Chauffeur professionnel
-
-**🎒 À prévoir :**
-• Chaussures confortables
-• Appareil photo`,
-    itinerary: ["Départ matinal", "Grande Mosquée de Kairouan", "Bassin des Aghlabides & Makrouds", "Déjeuner local", "Amphithéâtre romain d'El Jem", "Retour à l'hôtel"]
+    highlights: ["Grande Mosquée Okba Ibn Nafaa", "Bassin des Aghlabides", "Amphithéâtre d'El Jem (UNESCO)"],
+    description: "**Le matin – Départ**\n• Départ matinal depuis votre hôtel ou lieu de séjour.\n\n**Visite de Kairouan, Ville Sainte**\n• Visite de la Grande Mosquée Okba Ibn Nafaa, l'une des plus anciennes du monde musulman.\n• Découverte du bassin des Aghlabides.\n• Pause gourmande dans une pâtisserie locale pour goûter les fameux makrouds de Kairouan.\n\n**Départ pour El Jem**\n• Route en direction d'El Jem à travers les paysages ruraux du Sahel tunisien.\n\n**Déjeuner**\n• Déjeuner dans un restaurant typique de la région.\n\n**Visite de l'Amphithéâtre d'El Jem**\n• Exploration du spectaculaire amphithéâtre romain, classé au patrimoine mondial de l'UNESCO.\n• Temps libre pour prendre des photos et visiter le musée archéologique.\n\n**Fin de la journée – Retour**\n• Arrivée en fin de journée avec des souvenirs uniques.\n\n**Inclus :**\n• Transport en véhicule climatisé\n• Chauffeur professionnel\n\n**A prévoir :**\n• Chaussures confortables\n• Appareil photo",
+    itinerary: ["Départ matinal", "Grande Mosquée de Kairouan", "Bassin des Aghlabides & Makrouds", "Déjeuner local", "Amphithéâtre romain d'El Jem", "Retour à l'hôtel"],
+    packs: { s: 120, m: 160, l: 40 },
   },
   {
     id: "cap-bon",
-    name: "Journée d’Excursion : Le Cap Bon",
+    name: "Journée d'Excursion : Le Cap Bon",
     tagline: "Un voyage entre nature, artisanat et vestiges antiques",
     image: "/excursions/cap-bon.jpg",
     videos: [],
-    price: "Sur devis",
     duration: "Journée complète",
     highlights: ["Poterie de Nabeul", "Forteresse de Kelibia", "Cité punique de Kerkouane", "Sources thermales de Korbous"],
-    description: `**Le matin – Départ**
-• Prise en charge depuis votre hôtel ou lieu de séjour.
-
-**Visite de Nabeul**
-• Capitale de la poterie et de la céramique tunisienne.
-• Démonstration d’artisanat local et visite des ateliers.
-• Temps libre pour découvrir les souks colorés (épices, cuir, tissage).
-
-**Kelibia**
-• Traversée des paysages agricoles du Cap Bon.
-• À Kelibia, visite de la célèbre forteresse surplombant la mer.
-
-**Déjeuner (en extra)**
-• Déjeuner dans un restaurant typique, avec spécialités locales de la mer.
-
-**Kerkouane, cité punique**
-• Découverte de ce site archéologique exceptionnel classé à l’UNESCO.
-• Balade guidée parmi les vestiges d’une ville punique parfaitement conservée.
-
-**Korbous, sources thermales naturelles**
-• Route panoramique jusqu’à Korbous, nichée entre mer et montagne.
-• Pause détente près des sources thermales naturelles, réputées pour leurs bienfaits.
-• Temps libre pour se relaxer et profiter de la vue spectaculaire.
-
-**Fin de la journée – Retour**
-• Retour en fin de journée à votre lieu de séjour avec des souvenirs inoubliables.
-
-**✅ Ce qui est inclus :**
-• Transport en véhicule climatisé
-• Chauffeur professionnel
-
-**🎒 À prévoir :**
-• Appareil photo
-• Maillot et serviette (si baignade à Korbous)`,
-    itinerary: ["Départ de votre hôtel", "Nabeul (poterie et souks)", "Forteresse de Kelibia", "Déjeuner spécialité fruits de mer", "Site punique de Kerkouane", "Sources thermales de Korbous", "Retour à l'hôtel"]
+    description: "**Le matin – Départ**\n• Prise en charge depuis votre hôtel ou lieu de séjour.\n\n**Visite de Nabeul**\n• Capitale de la poterie et de la céramique tunisienne.\n• Démonstration d'artisanat local et visite des ateliers.\n• Temps libre pour découvrir les souks colorés (épices, cuir, tissage).\n\n**Kelibia**\n• Traversée des paysages agricoles du Cap Bon.\n• A Kelibia, visite de la célèbre forteresse surplombant la mer.\n\n**Déjeuner (en extra)**\n• Déjeuner dans un restaurant typique, avec spécialités locales de la mer.\n\n**Kerkouane, cité punique**\n• Découverte de ce site archéologique exceptionnel classé à l'UNESCO.\n\n**Korbous, sources thermales naturelles**\n• Route panoramique jusqu'à Korbous, nichée entre mer et montagne.\n• Pause détente près des sources thermales naturelles.\n• Temps libre pour se relaxer et profiter de la vue spectaculaire.\n\n**Fin de la journée – Retour**\n• Retour en fin de journée à votre lieu de séjour.\n\n**Inclus :**\n• Transport en véhicule climatisé\n• Chauffeur professionnel\n\n**A prévoir :**\n• Appareil photo\n• Maillot et serviette (si baignade à Korbous)",
+    itinerary: ["Départ de votre hôtel", "Nabeul (poterie et souks)", "Forteresse de Kelibia", "Déjeuner spécialité fruits de mer", "Site punique de Kerkouane", "Sources thermales de Korbous", "Retour à l'hôtel"],
+    packs: { s: 120, m: 150, l: 40 },
   }
 ];

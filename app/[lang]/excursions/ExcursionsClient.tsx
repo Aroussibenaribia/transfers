@@ -4,24 +4,52 @@ import { useState } from "react";
 import { excursions } from "@/lib/excursions";
 
 type Excursion = (typeof excursions)[0];
+type Pack = "s" | "m" | "l";
 
+const PACK_INFO: Record<Pack, { label: string; people: string; perPerson: boolean }> = {
+  s: { label: "Pack S", people: "1 – 4 personnes", perPerson: false },
+  m: { label: "Pack M", people: "4 – 8 personnes", perPerson: false },
+  l: { label: "Pack L", people: "9 – 14 personnes", perPerson: true },
+};
+
+function getPrice(excursion: Excursion, pack: Pack, participants: number): number {
+  if (pack === "l") return excursion.packs.l * participants;
+  if (pack === "m") return excursion.packs.m;
+  return excursion.packs.s;
+}
+
+// ─── Booking Modal ────────────────────────────────────────────────────────────
 interface BookingModalProps {
   excursion: Excursion;
   onClose: () => void;
 }
 
 function BookingModal({ excursion, onClose }: BookingModalProps) {
+  const [pack, setPack] = useState<Pack>("s");
+  const [withGuide, setWithGuide] = useState(false);
+  const [participants, setParticipants] = useState(1);
   const [form, setForm] = useState({
     clientName: "",
     clientEmail: "",
     clientPhone: "",
-    participants: 1,
     date: "",
     notes: "",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+
+  const isPackL = pack === "l";
+  const guideChecked = isPackL ? true : withGuide; // forced for L
+  const totalPrice = getPrice(excursion, pack, participants);
+
+  const handlePackChange = (p: Pack) => {
+    setPack(p);
+    // Reset participants to valid range for each pack
+    if (p === "s") setParticipants(1);
+    if (p === "m") setParticipants(4);
+    if (p === "l") setParticipants(9);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +62,10 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
         body: JSON.stringify({
           excursionId: excursion.id,
           excursionName: excursion.name,
+          participants,
+          pack,
+          withGuide: guideChecked,
+          totalPrice,
           ...form,
         }),
       });
@@ -50,32 +82,31 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
   return (
     <div
       style={{
-        position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)",
+        position: "fixed", inset: 0, background: "rgba(0,0,0,0.65)",
         display: "flex", alignItems: "center", justifyContent: "center",
         zIndex: 1000, padding: "16px",
       }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div style={{
-        background: "#fff", borderRadius: "20px", padding: "36px",
-        width: "100%", maxWidth: "500px", maxHeight: "90vh", overflowY: "auto",
-        boxShadow: "0 25px 50px rgba(0,0,0,0.25)",
-        animation: "scaleIn 0.3s ease"
+        background: "#fff", borderRadius: "20px", padding: "32px",
+        width: "100%", maxWidth: "540px", maxHeight: "92vh", overflowY: "auto",
+        boxShadow: "0 25px 60px rgba(0,0,0,0.3)",
       }}>
         {success ? (
           <div style={{ textAlign: "center", padding: "20px 0" }}>
             <div style={{ fontSize: 60, marginBottom: 16 }}>✅</div>
-            <h2 style={{ fontSize: 24, color: "#111827", marginBottom: 8 }}>Réservation Confirmée!</h2>
-            <p style={{ color: "#6b7280", marginBottom: 16 }}>Votre référence de réservation est:</p>
+            <h2 style={{ fontSize: 24, color: "#111827", marginBottom: 8 }}>Réservation Confirmée !</h2>
+            <p style={{ color: "#6b7280", marginBottom: 16 }}>Votre référence de réservation :</p>
             <div style={{
               background: "#f3e8ff", border: "2px dashed #7c3aed",
               borderRadius: "12px", padding: "16px", marginBottom: 24
             }}>
               <span style={{ fontSize: 28, fontWeight: 800, color: "#7c3aed", letterSpacing: 4, display: "block", marginBottom: 12 }}>{success}</span>
-              <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(`Excursion: ${success} - ${form.clientName}`)}`} 
-                alt="QR Code Réservation" 
-                style={{ borderRadius: 8, margin: "0 auto" }} 
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(`Excursion: ${success} - ${form.clientName}`)}`}
+                alt="QR Code"
+                style={{ borderRadius: 8, margin: "0 auto" }}
               />
             </div>
             <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 24 }}>
@@ -91,25 +122,169 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
           </div>
         ) : (
           <>
+            {/* Header */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
               <div>
-                <h2 style={{ fontSize: 20, color: "#111827", margin: "0 0 4px 0" }}>Réserver</h2>
-                <p style={{ color: "#7c3aed", fontWeight: 600, margin: 0, fontSize: 14 }}>{excursion.name}</p>
+                <h2 style={{ fontSize: 20, color: "#111827", margin: "0 0 4px 0" }}>Réserver l'excursion</h2>
+                <p style={{ color: "#7c3aed", fontWeight: 600, margin: 0, fontSize: 13 }}>{excursion.name}</p>
               </div>
               <button onClick={onClose} style={{
                 background: "#f3f4f6", border: "none", borderRadius: "50%",
                 width: 36, height: 36, cursor: "pointer", fontSize: 18, color: "#6b7280",
-                display: "flex", alignItems: "center", justifyContent: "center"
+                display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0
               }}>✕</button>
             </div>
 
             <form onSubmit={handleSubmit}>
+
+              {/* ── Pack Selector ── */}
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "#374151", marginBottom: 10 }}>
+                  Choisissez votre pack *
+                </label>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                  {(["s", "m", "l"] as Pack[]).map((p) => {
+                    const info = PACK_INFO[p];
+                    const price = p === "l"
+                      ? `${excursion.packs.l}€/pers`
+                      : `${excursion.packs[p]}€`;
+                    const isSelected = pack === p;
+                    return (
+                      <div
+                        key={p}
+                        onClick={() => handlePackChange(p)}
+                        style={{
+                          border: isSelected ? "2px solid #7c3aed" : "2px solid #e5e7eb",
+                          borderRadius: 12,
+                          padding: "14px 10px",
+                          textAlign: "center",
+                          cursor: "pointer",
+                          background: isSelected ? "#f3e8ff" : "#fff",
+                          transition: "all 0.2s",
+                          position: "relative",
+                        }}
+                      >
+                        {isSelected && (
+                          <div style={{
+                            position: "absolute", top: -1, right: -1,
+                            background: "#7c3aed", color: "#fff",
+                            borderRadius: "0 10px 0 8px",
+                            fontSize: 10, fontWeight: 700, padding: "2px 7px"
+                          }}>✓</div>
+                        )}
+                        <div style={{ fontWeight: 800, fontSize: 15, color: isSelected ? "#7c3aed" : "#111827", marginBottom: 4 }}>
+                          {info.label}
+                        </div>
+                        <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 8, lineHeight: 1.3 }}>
+                          {info.people}
+                        </div>
+                        <div style={{
+                          fontWeight: 800, fontSize: 18,
+                          color: isSelected ? "#7c3aed" : "#374151",
+                        }}>
+                          {price}
+                        </div>
+                        {p === "l" && (
+                          <div style={{ fontSize: 10, color: "#059669", fontWeight: 600, marginTop: 2 }}>
+                            prix total
+                          </div>
+                        )}
+                        {p !== "l" && (
+                          <div style={{ fontSize: 10, color: "#6b7280", marginTop: 2 }}>
+                            forfait groupe
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* ── Participants (only shown for Pack L) ── */}
+              {isPackL && (
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>
+                    Nombre de participants * <span style={{ color: "#6b7280", fontWeight: 400 }}>(9 à 14)</span>
+                  </label>
+                  <input
+                    type="number"
+                    min={9}
+                    max={14}
+                    required
+                    value={participants}
+                    onChange={e => setParticipants(Number(e.target.value))}
+                    style={{
+                      width: "100%", padding: "10px 14px", borderRadius: "8px",
+                      border: "1.5px solid #d1d5db", fontSize: 15, outline: "none",
+                      fontFamily: "inherit", fontWeight: 600
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* ── Guide Option ── */}
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "#374151", marginBottom: 10 }}>
+                  Guide touristique
+                </label>
+                <div
+                  onClick={() => !isPackL && setWithGuide(!withGuide)}
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    border: guideChecked ? "2px solid #7c3aed" : "2px solid #e5e7eb",
+                    borderRadius: 12, padding: "14px 16px",
+                    background: guideChecked ? "#f3e8ff" : "#f9fafb",
+                    cursor: isPackL ? "default" : "pointer",
+                    transition: "all 0.2s",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ fontSize: 28 }}>👨‍🏫</div>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: 14, color: "#111827" }}>
+                        Guide expert multilingue
+                      </div>
+                      <div style={{ fontSize: 12, color: "#6b7280", marginTop: 2 }}>
+                        {isPackL
+                          ? "Inclus et obligatoire pour les groupes 9–14 personnes"
+                          : "Accompagnement et explications sur les sites visités"}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
+                    {isPackL ? (
+                      <span style={{
+                        background: "#059669", color: "#fff",
+                        fontSize: 11, fontWeight: 700, padding: "3px 10px",
+                        borderRadius: "100px"
+                      }}>Obligatoire</span>
+                    ) : (
+                      <>
+                        <span style={{
+                          background: guideChecked ? "#7c3aed" : "#e5e7eb",
+                          color: guideChecked ? "#fff" : "#6b7280",
+                          fontSize: 11, fontWeight: 700, padding: "3px 10px",
+                          borderRadius: "100px", transition: "all 0.2s"
+                        }}>{guideChecked ? "Sélectionné" : "Optionnel"}</span>
+                        <span style={{ fontSize: 11, color: "#7c3aed", fontWeight: 600 }}>Sur demande</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+                {isPackL && (
+                  <p style={{ fontSize: 12, color: "#059669", marginTop: 6, fontWeight: 600 }}>
+                    ✓ Le guide est inclus automatiquement pour les groupes de 9 à 14 personnes
+                  </p>
+                )}
+              </div>
+
+              {/* ── Contact Fields ── */}
               {[
                 { label: "Nom complet *", key: "clientName", type: "text", placeholder: "Votre nom complet" },
                 { label: "Email *", key: "clientEmail", type: "email", placeholder: "votre@email.com" },
                 { label: "Téléphone *", key: "clientPhone", type: "tel", placeholder: "+216 XX XXX XXX" },
               ].map(({ label, key, type, placeholder }) => (
-                <div key={key} style={{ marginBottom: 16 }}>
+                <div key={key} style={{ marginBottom: 14 }}>
                   <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>{label}</label>
                   <input
                     type={type}
@@ -126,47 +301,31 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
                 </div>
               ))}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
-                <div>
-                  <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>Date souhaitée *</label>
-                  <input
-                    type="date"
-                    required
-                    min={new Date().toISOString().split("T")[0]}
-                    value={form.date}
-                    onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-                    style={{
-                      width: "100%", padding: "10px 14px", borderRadius: "8px",
-                      border: "1.5px solid #d1d5db", fontSize: 14, outline: "none",
-                      fontFamily: "inherit"
-                    }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>Participants *</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={20}
-                    required
-                    value={form.participants}
-                    onChange={e => setForm(f => ({ ...f, participants: Number(e.target.value) }))}
-                    style={{
-                      width: "100%", padding: "10px 14px", borderRadius: "8px",
-                      border: "1.5px solid #d1d5db", fontSize: 14, outline: "none",
-                      fontFamily: "inherit"
-                    }}
-                  />
-                </div>
+              {/* Date */}
+              <div style={{ marginBottom: 14 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>Date souhaitée *</label>
+                <input
+                  type="date"
+                  required
+                  min={new Date().toISOString().split("T")[0]}
+                  value={form.date}
+                  onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
+                  style={{
+                    width: "100%", padding: "10px 14px", borderRadius: "8px",
+                    border: "1.5px solid #d1d5db", fontSize: 14, outline: "none",
+                    fontFamily: "inherit"
+                  }}
+                />
               </div>
 
+              {/* Notes */}
               <div style={{ marginBottom: 20 }}>
                 <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>Notes / Demandes spéciales</label>
                 <textarea
-                  placeholder="Allergies, besoins particuliers, point de prise en charge..."
+                  placeholder="Point de prise en charge, besoins particuliers..."
                   value={form.notes}
                   onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
-                  rows={3}
+                  rows={2}
                   style={{
                     width: "100%", padding: "10px 14px", borderRadius: "8px",
                     border: "1.5px solid #d1d5db", fontSize: 14, outline: "none",
@@ -175,15 +334,33 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
                 />
               </div>
 
+              {/* ── Price Summary ── */}
               <div style={{
-                background: "#f3e8ff", borderRadius: "10px", padding: "12px 16px",
-                display: "flex", justifyContent: "space-between", alignItems: "center",
+                background: "linear-gradient(135deg, #f3e8ff, #ede9fe)",
+                borderRadius: 14, padding: "16px 20px",
+                border: "1.5px solid #c4b5fd",
                 marginBottom: 20
               }}>
-                <span style={{ fontSize: 14, color: "#6b21a8" }}>Total estimé</span>
-                <span style={{ fontSize: 22, fontWeight: 800, color: "#7c3aed" }}>
-                  {form.participants * 50}€
-                </span>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                  <span style={{ fontSize: 13, color: "#6b21a8", fontWeight: 600 }}>
+                    {PACK_INFO[pack].label} — {PACK_INFO[pack].people}
+                  </span>
+                  {isPackL && (
+                    <span style={{ fontSize: 12, color: "#7c3aed" }}>
+                      {participants} × {excursion.packs.l}€
+                    </span>
+                  )}
+                </div>
+                {guideChecked && !isPackL && (
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#7c3aed", marginBottom: 8 }}>
+                    <span>+ Guide touristique</span>
+                    <span>Sur demande</span>
+                  </div>
+                )}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid #c4b5fd", paddingTop: 10 }}>
+                  <span style={{ fontSize: 15, color: "#6b21a8", fontWeight: 700 }}>Total</span>
+                  <span style={{ fontSize: 26, fontWeight: 900, color: "#7c3aed" }}>{totalPrice}€</span>
+                </div>
               </div>
 
               {error && (
@@ -213,8 +390,11 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
   );
 }
 
+// ─── Excursion Card ───────────────────────────────────────────────────────────
+type Excursion2 = (typeof excursions)[0];
+
 interface ExcursionCardProps {
-  excursion: Excursion;
+  excursion: Excursion2;
   isExpanded: boolean;
   onToggle: () => void;
   onHeroChange: (img: string) => void;
@@ -235,7 +415,7 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
         }}
         onMouseEnter={() => onHeroChange(excursion.image)}
       >
-        {/* Card Header — always visible */}
+        {/* Card image */}
         <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
           <img
             src={excursion.image}
@@ -244,12 +424,15 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
             onMouseOver={e => (e.currentTarget.style.transform = "scale(1.05)")}
             onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")}
           />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
+          {/* Price badge — shows starting price */}
           <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)"
-          }} />
-          <div style={{ position: "absolute", top: 16, right: 16, background: "rgba(124,58,237,0.9)", color: "#fff", padding: "6px 14px", borderRadius: "100px", fontSize: 13, fontWeight: 700, backdropFilter: "blur(8px)" }}>
-            {excursion.price}
+            position: "absolute", top: 16, right: 16,
+            background: "rgba(124,58,237,0.92)", color: "#fff",
+            padding: "6px 14px", borderRadius: "100px",
+            fontSize: 13, fontWeight: 700, backdropFilter: "blur(8px)"
+          }}>
+            À partir de {excursion.packs.s}€
           </div>
           <div style={{ position: "absolute", bottom: 16, left: 20, right: 20 }}>
             <h3 style={{ color: "#fff", fontSize: 20, fontWeight: 800, margin: "0 0 4px 0", textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}>{excursion.name}</h3>
@@ -257,7 +440,24 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
           </div>
         </div>
 
-        {/* Highlights row */}
+        {/* Pack price strip */}
+        <div style={{
+          display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+          borderBottom: "1px solid #f3f4f6",
+          background: "#fafafa",
+        }}>
+          {(["s", "m", "l"] as Pack[]).map((p) => (
+            <div key={p} style={{ padding: "10px 8px", textAlign: "center", borderRight: p !== "l" ? "1px solid #f3f4f6" : "none" }}>
+              <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 600, marginBottom: 2 }}>{PACK_INFO[p].label}</div>
+              <div style={{ fontSize: 15, fontWeight: 800, color: "#7c3aed" }}>
+                {p === "l" ? `${excursion.packs.l}€/pers` : `${excursion.packs[p]}€`}
+              </div>
+              <div style={{ fontSize: 10, color: "#9ca3af" }}>{PACK_INFO[p].people}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Highlights */}
         <div style={{ padding: "16px 20px 0" }}>
           <p style={{ color: "#6b7280", fontSize: 14, margin: "0 0 12px 0" }}>{excursion.tagline}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
@@ -287,15 +487,13 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
         {/* Expanded content */}
         {isExpanded && (
           <div style={{ padding: "0 24px 28px", borderTop: "1px solid var(--gray-100)" }}>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", 
-              gap: 32, 
-              marginTop: 24 
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 32,
+              marginTop: 24
             }}>
-              
-              {/* Left Column: Description & Videos */}
-              {/* Left Column: Description & Videos */}
+              {/* Left: Description & Videos */}
               <div>
                 <h4 style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 12 }}>📖 Description</h4>
                 {excursion.description.split("\n\n").map((p, i) => (
@@ -317,7 +515,7 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
                 )}
               </div>
 
-              {/* Right Column: Itinerary */}
+              {/* Right: Itinerary + Book button */}
               <div>
                 <div style={{
                   background: "var(--purple-50)", borderRadius: "12px",
@@ -340,8 +538,40 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
                   </div>
                 </div>
 
-                <div style={{ marginTop: 24 }}>
-                  <h4 style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 12 }}>✨ Prêt à réserver ?</h4>
+                {/* Pack pricing table inside expanded */}
+                <div style={{ marginTop: 20, background: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, overflow: "hidden" }}>
+                  <div style={{ background: "#7c3aed", padding: "10px 16px" }}>
+                    <h4 style={{ fontSize: 14, fontWeight: 700, color: "#fff", margin: 0 }}>💶 Tarifs par pack</h4>
+                  </div>
+                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr style={{ background: "#f9fafb" }}>
+                        <th style={{ padding: "10px 14px", textAlign: "left", fontSize: 12, color: "#6b7280", fontWeight: 600 }}>Pack</th>
+                        <th style={{ padding: "10px 14px", textAlign: "left", fontSize: 12, color: "#6b7280", fontWeight: 600 }}>Groupe</th>
+                        <th style={{ padding: "10px 14px", textAlign: "right", fontSize: 12, color: "#6b7280", fontWeight: 600 }}>Prix</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderTop: "1px solid #f3f4f6" }}>
+                        <td style={{ padding: "10px 14px", fontWeight: 700, color: "#7c3aed" }}>Pack S</td>
+                        <td style={{ padding: "10px 14px", fontSize: 13, color: "#374151" }}>1 – 4 personnes</td>
+                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.s}€ <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>forfait</span></td>
+                      </tr>
+                      <tr style={{ borderTop: "1px solid #f3f4f6", background: "#fafafa" }}>
+                        <td style={{ padding: "10px 14px", fontWeight: 700, color: "#7c3aed" }}>Pack M</td>
+                        <td style={{ padding: "10px 14px", fontSize: 13, color: "#374151" }}>4 – 8 personnes</td>
+                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.m}€ <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>forfait</span></td>
+                      </tr>
+                      <tr style={{ borderTop: "1px solid #f3f4f6" }}>
+                        <td style={{ padding: "10px 14px", fontWeight: 700, color: "#7c3aed" }}>Pack L</td>
+                        <td style={{ padding: "10px 14px", fontSize: 13, color: "#374151" }}>9 – 14 personnes</td>
+                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.l}€ <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>/pers · guide inclus</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ marginTop: 20 }}>
                   <button
                     onClick={() => setBooking(!booking)}
                     style={{
@@ -351,33 +581,28 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
                       boxShadow: "0 8px 20px rgba(124,58,237,0.3)",
                       transition: "transform 0.2s"
                     }}
-                    onMouseOver={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                    onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}
+                    onMouseOver={e => (e.currentTarget.style.transform = "translateY(-2px)")}
+                    onMouseOut={e => (e.currentTarget.style.transform = "translateY(0)")}
                   >
                     {booking ? "Fermer le formulaire" : "Réserver cette excursion"}
                   </button>
                 </div>
               </div>
             </div>
-
-            {/* Booking Form (Full Width Below) */}
-            {booking && (
-              <div style={{ marginTop: 24 }}>
-                <BookingModal excursion={excursion} onClose={() => setBooking(false)} />
-              </div>
-            )}
           </div>
         )}
       </div>
+
+      {booking && <BookingModal excursion={excursion} onClose={() => setBooking(false)} />}
     </>
   );
 }
 
+// ─── Main Export ──────────────────────────────────────────────────────────────
 export default function ExcursionsClient() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [heroImage, setHeroImage] = useState("/excursions/hero-1.jpg");
   const heroImages = ["/excursions/hero-1.jpg", "/excursions/hero-2.jpg", "/excursions/hero-3.jpg"];
-  const [heroIndex, setHeroIndex] = useState(0);
 
   return (
     <>
@@ -387,15 +612,9 @@ export default function ExcursionsClient() {
           key={heroImage}
           src={heroImage}
           alt="Excursions Tunisie"
-          style={{
-            width: "100%", height: "100%", objectFit: "cover",
-            animation: "fadeInHero 0.8s ease",
-          }}
+          style={{ width: "100%", height: "100%", objectFit: "cover", animation: "fadeInHero 0.8s ease" }}
         />
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.65) 100%)"
-        }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.65) 100%)" }} />
         <div style={{
           position: "absolute", inset: 0, display: "flex",
           flexDirection: "column", alignItems: "center", justifyContent: "center",
@@ -417,14 +636,13 @@ export default function ExcursionsClient() {
             Des excursions exceptionnelles avec chauffeurs professionnels multilingues,
             voitures climatisées et guides touristiques experts.
           </p>
-          {/* Hero image switcher dots */}
           <div style={{ display: "flex", gap: 8 }}>
             {heroImages.map((img, i) => (
               <button key={i} onClick={() => setHeroImage(img)}
                 style={{
-                  width: i === heroImages.indexOf(heroImage) ? 28 : 10,
+                  width: img === heroImage ? 28 : 10,
                   height: 10, borderRadius: "100px",
-                  background: i === heroImages.indexOf(heroImage) ? "#fff" : "rgba(255,255,255,0.5)",
+                  background: img === heroImage ? "#fff" : "rgba(255,255,255,0.5)",
                   border: "none", cursor: "pointer", transition: "all 0.3s", padding: 0
                 }}
               />
@@ -440,17 +658,15 @@ export default function ExcursionsClient() {
             Votre partenaire de confiance pour explorer la Tunisie
           </h2>
           <p style={{ fontSize: 16, color: "#4b5563", lineHeight: 1.8 }}>
-            Ô-Transfert Aéroport Tunisie vous offre des excursions exceptionnelles à travers la Tunisie.
             Nos chauffeurs professionnels expérimentés parlent plusieurs langues et vous accompagnent
-            tout au long de votre excursion. Nous proposons également la possibilité d'avoir un
-            guide touristique pour vous conseiller.
+            tout au long de votre excursion. Tarifs simples en 3 packs adaptés à la taille de votre groupe.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 32, marginTop: 32, flexWrap: "wrap" }}>
             {[
-              { icon: "🌍", label: "Multilingues", sub: "FR, EN, DE, IT, AR" },
-              { icon: "🚗", label: "Climatisées", sub: "Voitures confortables" },
-              { icon: "🏛️", label: "7 Excursions", sub: "Toute la Tunisie" },
-              { icon: "👨‍🏫", label: "Guides experts", sub: "Sur demande" },
+              { icon: "👥", label: "Pack S", sub: "1 – 4 personnes" },
+              { icon: "🧑‍🤝‍🧑", label: "Pack M", sub: "4 – 8 personnes" },
+              { icon: "🚌", label: "Pack L", sub: "9 – 14 personnes" },
+              { icon: "👨‍🏫", label: "Guide", sub: "Sur demande / inclus Pack L" },
             ].map(({ icon, label, sub }) => (
               <div key={label} style={{ textAlign: "center" }}>
                 <div style={{ fontSize: 32, marginBottom: 8 }}>{icon}</div>
@@ -468,14 +684,10 @@ export default function ExcursionsClient() {
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", marginBottom: 12 }}>Nos Excursions</h2>
             <p style={{ color: "var(--text-muted)", maxWidth: 480, margin: "0 auto" }}>
-              Cliquez sur une excursion pour découvrir le programme complet et réserver votre journée
+              Cliquez sur une excursion pour découvrir le programme complet et réserver
             </p>
           </div>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: 28
-          }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 28 }}>
             {excursions.map(exc => (
               <ExcursionCard
                 key={exc.id}
