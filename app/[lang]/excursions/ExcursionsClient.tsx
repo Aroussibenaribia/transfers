@@ -145,7 +145,9 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                   {(["s", "m", "l"] as Pack[]).map((p) => {
                     const info = PACK_INFO[p];
-                    const price = p === "l"
+                    const price = excursion.packs[p] === 0
+                      ? "Sur demande"
+                      : p === "l"
                       ? `${excursion.packs.l}€/pers`
                       : `${excursion.packs[p]}€`;
                     const isSelected = pack === p;
@@ -184,12 +186,12 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
                         }}>
                           {price}
                         </div>
-                        {p === "l" && (
+                        {excursion.packs[p] !== 0 && p === "l" && (
                           <div style={{ fontSize: 10, color: "#059669", fontWeight: 600, marginTop: 2 }}>
                             prix total
                           </div>
                         )}
-                        {p !== "l" && (
+                        {excursion.packs[p] !== 0 && p !== "l" && (
                           <div style={{ fontSize: 10, color: "#6b7280", marginTop: 2 }}>
                             forfait groupe
                           </div>
@@ -345,7 +347,7 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
                   <span style={{ fontSize: 13, color: "#6b21a8", fontWeight: 600 }}>
                     {PACK_INFO[pack].label} — {PACK_INFO[pack].people}
                   </span>
-                  {isPackL && (
+                  {isPackL && excursion.packs.l !== 0 && (
                     <span style={{ fontSize: 12, color: "#7c3aed" }}>
                       {participants} × {excursion.packs.l}€
                     </span>
@@ -359,7 +361,9 @@ function BookingModal({ excursion, onClose }: BookingModalProps) {
                 )}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid #c4b5fd", paddingTop: 10 }}>
                   <span style={{ fontSize: 15, color: "#6b21a8", fontWeight: 700 }}>Total</span>
-                  <span style={{ fontSize: 26, fontWeight: 900, color: "#7c3aed" }}>{totalPrice}€</span>
+                  <span style={{ fontSize: 26, fontWeight: 900, color: "#7c3aed" }}>
+                    {totalPrice === 0 ? "Sur demande" : `${totalPrice}€`}
+                  </span>
                 </div>
               </div>
 
@@ -432,7 +436,7 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
             padding: "6px 14px", borderRadius: "100px",
             fontSize: 13, fontWeight: 700, backdropFilter: "blur(8px)"
           }}>
-            À partir de {excursion.packs.s}€
+            {excursion.packs.s === 0 ? "Sur demande" : `À partir de ${excursion.packs.s}€`}
           </div>
           <div style={{ position: "absolute", bottom: 16, left: 20, right: 20 }}>
             <h3 style={{ color: "#fff", fontSize: 20, fontWeight: 800, margin: "0 0 4px 0", textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}>{excursion.name}</h3>
@@ -450,7 +454,7 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
             <div key={p} style={{ padding: "10px 8px", textAlign: "center", borderRight: p !== "l" ? "1px solid #f3f4f6" : "none" }}>
               <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 600, marginBottom: 2 }}>{PACK_INFO[p].label}</div>
               <div style={{ fontSize: 15, fontWeight: 800, color: "#7c3aed" }}>
-                {p === "l" ? `${excursion.packs.l}€/pers` : `${excursion.packs[p]}€`}
+                {excursion.packs[p] === 0 ? "Sur demande" : p === "l" ? `${excursion.packs.l}€/pers` : `${excursion.packs[p]}€`}
               </div>
               <div style={{ fontSize: 10, color: "#9ca3af" }}>{PACK_INFO[p].people}</div>
             </div>
@@ -555,17 +559,17 @@ function ExcursionCard({ excursion, isExpanded, onToggle, onHeroChange }: Excurs
                       <tr style={{ borderTop: "1px solid #f3f4f6" }}>
                         <td style={{ padding: "10px 14px", fontWeight: 700, color: "#7c3aed" }}>Pack S</td>
                         <td style={{ padding: "10px 14px", fontSize: 13, color: "#374151" }}>1 – 4 personnes</td>
-                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.s}€ <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>forfait</span></td>
+                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.s === 0 ? "Sur demande" : `${excursion.packs.s}€`} {excursion.packs.s !== 0 && <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>forfait</span>}</td>
                       </tr>
                       <tr style={{ borderTop: "1px solid #f3f4f6", background: "#fafafa" }}>
                         <td style={{ padding: "10px 14px", fontWeight: 700, color: "#7c3aed" }}>Pack M</td>
                         <td style={{ padding: "10px 14px", fontSize: 13, color: "#374151" }}>4 – 8 personnes</td>
-                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.m}€ <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>forfait</span></td>
+                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.m === 0 ? "Sur demande" : `${excursion.packs.m}€`} {excursion.packs.m !== 0 && <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>forfait</span>}</td>
                       </tr>
                       <tr style={{ borderTop: "1px solid #f3f4f6" }}>
                         <td style={{ padding: "10px 14px", fontWeight: 700, color: "#7c3aed" }}>Pack L</td>
                         <td style={{ padding: "10px 14px", fontSize: 13, color: "#374151" }}>9 – 14 personnes</td>
-                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.l}€ <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>/pers · guide inclus</span></td>
+                        <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 800, color: "#111827" }}>{excursion.packs.l === 0 ? "Sur demande" : `${excursion.packs.l}€`} {excursion.packs.l !== 0 && <span style={{ fontSize: 11, color: "#6b7280", fontWeight: 400 }}>/pers · guide inclus</span>}</td>
                       </tr>
                     </tbody>
                   </table>
