@@ -5,6 +5,61 @@ import HomeHero from "@/components/HomeHero";
 import TripAdvisorSection from "@/components/TripAdvisorSection";
 import ContactSection from "@/components/ContactSection";
 import CustomerVideosSection from "@/components/CustomerVideosSection";
+import type { Metadata } from "next";
+
+const BASE_URL = "https://www.o-transfert.com";
+
+const META: Record<string, { title: string; description: string }> = {
+  fr: {
+    title: "O-Transfert | Transfert Aéroport Tunisie — Prix Fixe, Confirmation Immédiate",
+    description:
+      "Réservez votre transfert aéroport en Tunisie : Tunis Carthage, Monastir, Djerba, Sfax. Véhicules Éco (MG 5), Confort (Peugeot Traveller), Van (Ford Transit). Prix fixe, sans surprise.",
+  },
+  en: {
+    title: "O-Transfert | Tunisia Airport Transfer — Fixed Price, Instant Confirmation",
+    description:
+      "Book your airport transfer in Tunisia: Tunis Carthage, Monastir, Djerba, Sfax. Eco (MG 5), Comfort (Peugeot Traveller), Van (Ford Transit). Fixed price, no hidden fees.",
+  },
+  de: {
+    title: "O-Transfert | Flughafentransfer Tunesien — Festpreis, Sofortbestätigung",
+    description:
+      "Buchen Sie Ihren Flughafentransfer in Tunesien: Tunis Karthago, Monastir, Djerba, Sfax. Öko (MG 5), Komfort (Peugeot Traveller), Van (Ford Transit). Festpreis, keine versteckten Kosten.",
+  },
+  ar: {
+    title: "أو-ترانسفير | نقل المطار في تونس — سعر ثابت، تأكيد فوري",
+    description:
+      "احجز نقلك من مطار تونس قرطاج، المنستير، جربة، صفاقس. سيارات اقتصادية، مريحة أو فان. أسعار ثابتة، بدون رسوم خفية.",
+  },
+  it: {
+    title: "O-Transfert | Trasferimento Aeroporto Tunisia — Prezzo Fisso, Conferma Immediata",
+    description:
+      "Prenota il tuo trasferimento aeroportuale in Tunisia: Tunisi Cartagine, Monastir, Djerba, Sfax. Eco (MG 5), Comfort (Peugeot Traveller), Van (Ford Transit). Prezzo fisso, nessun costo nascosto.",
+  },
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const meta = META[lang] ?? META.fr;
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: `${BASE_URL}/${lang}`,
+      languages: {
+        fr: `${BASE_URL}/fr`,
+        en: `${BASE_URL}/en`,
+        de: `${BASE_URL}/de`,
+        ar: `${BASE_URL}/ar`,
+        it: `${BASE_URL}/it`,
+        "x-default": `${BASE_URL}/fr`,
+      },
+    },
+  };
+}
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const resolvedParams = await params;
@@ -110,10 +165,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         <p>{dict.footer.desc}</p>
         <div style={{ marginTop: 24, marginBottom: 16 }}>
           <p style={{ color: "rgba(255,255,255,0.8)", fontSize: 13, marginBottom: 8 }}>Scannez pour visiter notre site</p>
-          <img 
-            src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent("https://transfert-tunisie.com")}`} 
-            alt="Site QR Code" 
-            style={{ borderRadius: 6, background: "#fff", padding: 4 }} 
+          <img
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent("https://www.o-transfert.com")}`}
+            alt="O-Transfert QR Code"
+            style={{ borderRadius: 6, background: "#fff", padding: 4 }}
           />
         </div>
         <p style={{ marginTop: 8, fontSize: 12, color: "rgba(255,255,255,.35)" }}>

@@ -19,6 +19,10 @@ const vehicleLabel: Record<VehicleType, string> = {
   van: "Van",
 };
 
+// ─── TEMPORARY: set to true to restore full price display ─────────────────────
+const SHOW_PRICE = false;
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function PriceSummary({
   departure,
   destination,
@@ -47,24 +51,53 @@ export default function PriceSummary({
         <span>💳</span> Estimation du prix
       </h3>
 
-      {hasRoute && !vehicle && (
+      {/* ── TEMPORARY CONTACT MESSAGE (set SHOW_PRICE = true above to restore prices) ── */}
+      {!SHOW_PRICE && hasRoute && (
+        <div style={{
+          textAlign: "center",
+          padding: "20px 8px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+        }}>
+          <div style={{ fontSize: 36 }}>📧</div>
+          <p style={{ color: "rgba(255,255,255,0.9)", fontSize: 14, lineHeight: 1.6, margin: 0 }}>
+            Pour confirmer le prix de votre transfert, contactez-nous à :
+          </p>
+          <a
+            href="mailto:contact@o-transfert.com"
+            style={{
+              display: "inline-block",
+              background: "rgba(255,255,255,0.15)",
+              border: "1px solid rgba(255,255,255,0.35)",
+              color: "#fff",
+              padding: "10px 18px",
+              borderRadius: "100px",
+              fontWeight: 700,
+              fontSize: 14,
+              textDecoration: "none",
+              letterSpacing: "0.3px",
+            }}
+          >
+            contact@o-transfert.com
+          </a>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, margin: 0 }}>
+            Réponse rapide · Prix fixe garanti
+          </p>
+        </div>
+      )}
+
+      {/* ── ORIGINAL PRICE DISPLAY (active when SHOW_PRICE = true) ── */}
+      {SHOW_PRICE && hasRoute && !vehicle && (
         <div className="price-placeholder">
           Sélectionnez un véhicule pour voir le prix
         </div>
       )}
 
-      {hasRoute && vehicle && (
+      {SHOW_PRICE && hasRoute && vehicle && (
         <>
-          <div
-            style={{
-              fontSize: 13,
-              color: "rgba(255,255,255,.75)",
-              marginBottom: 16,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-            }}
-          >
+          <div style={{ fontSize: 13, color: "rgba(255,255,255,.75)", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }}>
             <span>{getLocationName(departure).split(" ")[0]}</span>
             <span>→</span>
             <span>{getLocationName(destination).split(" ")[0]}</span>
@@ -78,9 +111,7 @@ export default function PriceSummary({
             <>
               {pricing.distanceKm > 0 && (
                 <div style={{ marginBottom: 12 }}>
-                  <span className="distance-badge">
-                    📏 ~{pricing.distanceKm} km
-                  </span>
+                  <span className="distance-badge">📏 ~{pricing.distanceKm} km</span>
                 </div>
               )}
 
@@ -115,15 +146,7 @@ export default function PriceSummary({
                 <span>{pricing.total}€</span>
               </div>
 
-              <p
-                style={{
-                  fontSize: 11,
-                  color: "rgba(255,255,255,.55)",
-                  marginTop: 12,
-                  textAlign: "center",
-                  lineHeight: 1.5,
-                }}
-              >
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,.55)", marginTop: 12, textAlign: "center", lineHeight: 1.5 }}>
                 Prix indicatif · Règlement à bord
               </p>
             </>
